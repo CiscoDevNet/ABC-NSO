@@ -1,0 +1,8 @@
+<config xmlns="http://tail-f.com/ns/config/1.0">
+  <services xmlns="http://tail-f.com/ns/ncs">
+    <testsvc xmlns="http://example.com/testsvc">
+      <name>hellow</name>
+      <dummy>1.1.1.1</dummy>
+    </testsvc>
+  </services>
+</config>
