@@ -1,0 +1,118 @@
+module l3vpn {
+  namespace "http://com/example/l3vpn";
+  prefix l3vpn;
+
+  import ietf-inet-types { prefix inet; }
+  import tailf-ncs       { prefix ncs; }
+  import tailf-common    { prefix tailf; }
+
+
+  list l3vpn {
+    tailf:info "Layer-3 MPLS VPN Service";
+    key "vpn-name";
+
+    uses ncs:service-data;
+    ncs:servicepoint "l3vpn-servicepoint";
+
+    leaf vpn-name {
+      tailf:info "Enter a unique L3VPN service instance identifier.";
+      tailf:cli-multi-value;
+      type string;
+    }
+
+    container vpn {
+    
+      leaf vpn-id {
+        type uint32;
+      }
+
+      leaf vpn-description {
+        tailf:cli-multi-value;
+        type string;
+      }
+      
+      leaf customer {
+        type leafref {
+          path "/ncs:customers/ncs:customer/ncs:id";
+        }
+      }
+    }
+
+    list link {
+      key link-name;
+      min-elements 1;
+
+      leaf link-name {
+        type string;
+      }
+
+      leaf link-id {
+        type uint32;
+      }
+
+      leaf link-description {
+        type string;
+      }
+
+      leaf bgp {
+        type boolean;
+      }
+      
+      leaf vlan {
+        type uint32;
+      }
+
+      container pe {
+        leaf device {
+          type leafref {
+            path "/ncs:devices/ncs:device/ncs:name";
+          }
+        }
+
+        leaf interface {
+          type string;
+        }
+
+        leaf ip {
+          type inet:ipv4-address;
+        }
+
+        leaf ipv6 {
+          type inet:ipv6-address;
+        }
+
+        leaf-list static {
+          type inet:ip-prefix;
+        }
+
+      }
+
+      container ce {
+        leaf device {
+          tailf:info "Select the CE Router.";
+          type leafref {
+            path "/ncs:devices/ncs:device/ncs:name";
+          }
+        }
+
+        leaf interface {
+          type string;
+        }
+
+        leaf ip {
+          type inet:ipv4-address;
+        }
+        
+        leaf ipv6 {
+          type inet:ipv6-address;
+        }
+
+        leaf-list static {
+          type inet:ip-prefix;
+        }
+
+      }
+    }
+  }
+}
+

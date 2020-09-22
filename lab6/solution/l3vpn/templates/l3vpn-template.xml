@@ -1,0 +1,251 @@
+<config-template xmlns="http://tail-f.com/ns/config/1.0"
+                 servicepoint="l3vpn">
+  <devices xmlns="http://tail-f.com/ns/ncs">
+    
+    <?foreach {/site}?>
+
+        <?save-context current-site?>
+        <?set vpn-name = {../vpn-name}?>
+        <?set vlan-id = {vlan-id}?>
+
+        <!-- 
+            PE Router Configuration
+        -->
+        <device>
+            <name>{pe/device}</name>
+            <config>
+                <?switch-context current-site?>
+                <vrf xmlns="http://tail-f.com/ned/cisco-ios-xr">
+                    <vrf-list>
+                    <name>{$vpn-name}</name>
+                    <address-family>
+                        <ipv4>
+                        <unicast>
+                            <import>
+                            <route-target>
+                                <address-list>
+                                <name>64497:{$vlan-id}</name>
+                                </address-list>
+                            </route-target>
+                            </import>
+                            <export>
+                            <route-target>
+                                <address-list>
+                                <name>64497:{$vlan-id}</name>
+                                </address-list>
+                            </route-target>
+                            </export>
+                            <maximum>
+                            <prefix>
+                                <limit>1000</limit>
+                                <mid-thresh>80</mid-thresh>
+                            </prefix>
+                            </maximum>
+                        </unicast>
+                        </ipv4>
+                    </address-family>
+                    </vrf-list>
+                </vrf>
+                <interface xmlns="http://tail-f.com/ned/cisco-ios-xr">
+                    <GigabitEthernet-subinterface>
+                        <GigabitEthernet>
+                            <id>{pe/interface-to-ce}.{$vlan-id}</id>
+                            <!--TODO: reference description from a outside-the-service leaf node and concatenate with vpn-name-->
+                            <description>Configured for {$vpn-name}</description>
+                            <encapsulation>
+                            <dot1q>
+                                <vlan-id>{$vlan-id}</vlan-id>
+                            </dot1q>
+                            </encapsulation>
+                            <vrf>{$vpn-name}</vrf>
+                            <ipv4>
+                            <address>
+                                <ip>{address}</ip>
+                                <mask>255.255.255.252</mask>
+                            </address>
+                            </ipv4>
+                        </GigabitEthernet>
+                    </GigabitEthernet-subinterface>
+                </interface>
+                <route-policy xmlns="http://tail-f.com/ned/cisco-ios-xr">
+                    <name>PASS</name>
+                    <value>  pass&#13;
+                </value>
+                </route-policy>
+                    <router xmlns="http://tail-f.com/ned/cisco-ios-xr">
+
+                    <?if {pe/routing/bgp='true'}?>
+                        <bgp>
+                        <bgp-no-instance>
+                            <id>64497</id>
+                            <vrf>
+                                <name>{$vpn-name}</name>
+                                <rd>64497:{$vlan-id}</rd>
+                                <address-family>
+                                    <ipv4>
+                                    <unicast>
+                                        <redistribute>
+                                        <?if {pe/routing/redistribute/connected}?>
+                                            <connected/>
+                                        <?end?>
+                                        <?if {pe/routing/redistribute/connected}?>
+                                            <static/>
+                                        <?end?>
+                                        </redistribute>
+                                    </unicast>
+                                    </ipv4>
+                                </address-family>
+                                <neighbor>
+                                    <id>{string(ce/address)}</id>
+                                    <remote-as>{string(ce/asn)}</remote-as>
+                                    <address-family>
+                                    <ipv4>
+                                        <unicast>
+                                        <route-policy>
+                                            <direction>in</direction>
+                                            <name>PASS</name>
+                                        </route-policy>
+                                        <route-policy>
+                                            <direction>out</direction>
+                                            <name>PASS</name>
+                                        </route-policy>
+                                        <allowas-in>
+                                            <as-occurrence-number>1</as-occurrence-number>
+                                        </allowas-in>
+                                        <as-override/>
+                                        </unicast>
+                                    </ipv4>
+                                    </address-family>
+                                </neighbor>
+                            </vrf>
+                        </bgp-no-instance>
+                        </bgp>
+                        <?end?>
+                        <?if {pe/routing/static}?>
+                            <static>
+                                <vrf>
+                                <name>{$vpn-name}</name>
+                                <address-family>
+                                    <ipv4>
+                                    <unicast>
+                                        <routes-ip>
+                                            <net>{pe/routing/static}</net>
+                                            <address>{string(ce/address)}</address>
+                                        </routes-ip>
+                                    </unicast>
+                                    </ipv4>
+                                </address-family>
+                                </vrf>
+                            </static>
+                        <?end?>
+                    </router>
+                
+            </config>
+        </device>
+
+        <!-- 
+            CE Router Configuration
+        -->
+        <device>
+            <name>{ce/device}</name>
+            <config>
+                <?switch-context current-site?>
+                <bridge-domain xmlns="urn:ios">
+                    <bridge-domain-list>
+                        <id>{$vlan-id}</id>
+                    </bridge-domain-list>
+                </bridge-domain>
+                <interface xmlns="urn:ios">
+                    <GigabitEthernet>
+                    <name>{ce/interface-to-pe}</name>
+                    <service>
+                        <instance>
+                        <id>{$vlan-id}</id>
+                        <ethernet/>
+
+                        <encapsulation>
+                            <dot1q>
+                            <id>{$vlan-id}</id>
+                            </dot1q>
+                        </encapsulation>
+                        <rewrite>
+                            <ingress>
+                            <tag>
+                                <pop>1</pop>
+                                <mode>symmetric</mode>
+                            </tag>
+                            </ingress>
+                        </rewrite>
+                        <bridge-domain>
+                            <bridge-id>{$vlan-id}</bridge-id>
+                        </bridge-domain>
+                        </instance>
+                    </service>
+                    </GigabitEthernet>
+                    <BDI>
+                        <name>{$vlan-id}</name>
+                        <mop>
+                            <xenabled>false</xenabled>
+                            <sysid>false</sysid>
+                        </mop>
+                        <ip>
+                            <address>
+                            <primary>
+                                <address>{ce/address}</address>
+                                <mask>255.255.255.252</mask>
+                            </primary>
+                            </address>
+                        </ip>
+                    </BDI>
+                </interface>
+                <?if {ce/routing/static}?>
+                    <?foreach {ce/routing/static}?> 
+                    <ip xmlns="urn:ios">
+                        <route>
+                        <ip-route-forwarding-list>
+                            <prefix>{prefix}</prefix>
+                            <mask>{mask}</mask>   
+                            <forwarding-address>{string(../../../pe/address)}</forwarding-address>
+                        </ip-route-forwarding-list>
+                        </route>
+                    </ip>
+                   <?end?>
+                <?end?>
+                <?if {ce/routing/bgp='true'}?>
+                    <router xmlns="urn:ios">
+                        <bgp>
+                        <as-no>{ce/asn}</as-no>
+                        <bgp>
+                            <log-neighbor-changes>true</log-neighbor-changes>
+                        </bgp>
+                        <neighbor>
+                            <id>{../pe/address}</id>
+                            <remote-as>64497</remote-as>
+                        </neighbor>
+                        <address-family>
+                            <ipv4>
+                            <af>unicast</af>
+                            <?foreach {../ce/routing/network}?>
+                                <network>
+                                    <number>{address}</number>
+                                    <mask>{mask}</mask>
+                                </network>
+                            <?end?>
+                            <neighbor>
+                                <id>{../pe/address}</id>
+                                <activate/>
+                                <allowas-in>
+                                <as-no>1</as-no>
+                                </allowas-in>
+                                <as-override/>
+                            </neighbor>
+                            </ipv4>
+                        </address-family>
+                        </bgp>
+                    </router>
+                <?end?>
+            </config>
+        </device>
+    <?end?>
+  </devices>
+</config-template>

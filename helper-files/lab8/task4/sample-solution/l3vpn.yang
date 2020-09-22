@@ -1,0 +1,175 @@
+module l3vpn {
+  namespace "http://com/example/l3vpn";
+  prefix l3vpn;
+
+  import ietf-inet-types { prefix inet; }
+  import tailf-ncs       { prefix ncs; }
+  import tailf-common    { prefix tailf; }
+  import tailf-ned-cisco-ios { prefix ios; }
+  import tailf-ned-cisco-ios-xr { prefix xr; }
+
+  list l3vpn {
+    tailf:info "Layer-3 MPLS VPN Service";
+    key "vpn-name";
+
+    uses ncs:service-data;
+    ncs:servicepoint "l3vpn-servicepoint";
+
+    leaf vpn-name {
+      tailf:info "Enter a unique L3VPN service instance identifier.";
+      tailf:cli-multi-value;
+      type string;
+    }
+
+    container vpn {
+      tailf:info "VPN-specific configuration.";
+      tailf:cli-add-mode;
+    
+      leaf vpn-id {
+        tailf:info "Enter a unique L3VPN service ID number.";
+        type uint32;
+        mandatory true;
+      }
+
+      leaf vpn-description {
+        tailf:info "Enter a service instance description.";
+        tailf:cli-multi-value;
+        type string;
+      }
+      
+      leaf customer {
+        tailf:info "iSelect a customer for this service instance.";
+        type leafref {
+          path "/ncs:customers/ncs:customer/ncs:id";
+        }
+      }
+    }
+
+    list link {
+      key link-name;
+      min-elements 1;
+      tailf:info "Link-specific configuration.";
+      unique "vlan pe/device pe/interface";
+
+      leaf link-name {
+        tailf:info "Enter a unique link/site identifier.";
+        tailf:cli-multi-value;
+        type string;
+      }
+
+      leaf link-id {
+        tailf:info "Enter a unique link ID number.";
+        type uint32;
+        mandatory true;
+      }
+
+      leaf link-description {
+        tailf:info "Enter a link/site description.";
+        tailf:cli-multi-value;
+        type string;
+      }
+
+      leaf bgp {
+        tailf:info "Set to true if BGP is required with the site.";
+        type boolean;
+        default true;
+      }
+      
+      leaf vlan {
+        tailf:info "Enter a VLAN number to be used with the site.";
+        type uint32;
+        mandatory true;
+      }
+
+      container pe {
+        tailf:info "PE-specific configuration.";
+        tailf:cli-add-mode;
+        leaf device {
+          tailf:info "Select PE device.";
+          mandatory true;
+          type leafref {
+            path "/ncs:devices/ncs:device/ncs:name";
+          }
+          must "count(
+                  /l3vpn[vpn-name != current()/../../../vpn-name]/link[
+                    pe/device = current() and 
+                    pe/interface = current()/../interface and 
+                    vlan = current()/../../vlan]
+                ) = 0" { 
+            error-message "Device-Interface-VLAN combination is already used for another link in another service instance."; 
+          }
+        }
+
+        leaf interface {
+          tailf:info "Select customer-facing GigabitEthernet interface on PE router.";
+          mandatory true;
+          type leafref {
+            path "deref(../device)/../ncs:config/xr:interface/xr:GigabitEthernet/xr:id";
+          }
+          must "count(
+                  /l3vpn[vpn-name != current()/../../../vpn-name]/link[
+                    pe/device = current()/../device and 
+                    pe/interface = current() and 
+                    vlan = current()/../../vlan]
+                ) = 0" { 
+            error-message "Device-Interface-VLAN combination is already used for another link in another service instance."; 
+          }
+        }
+
+        leaf ip {
+          tailf:info "Set IP address of PE router on customer-facing interface (/30 subnets are used).";
+          type inet:ipv4-address;
+          mandatory true;
+        }
+
+        leaf ipv6 {
+          tailf:info "Set IPv6 address of PE router on customer-facing interface (/64 subnets are used).";
+          type inet:ipv6-address;
+        }
+
+        leaf-list static {
+          tailf:info "Enter IPv4 or IPv6 prefixes to be statically routed towards the site.";
+          type inet:ip-prefix;
+        }
+
+      }
+
+      container ce {
+        tailf:info "CE-specific configuration.";
+        tailf:cli-add-mode;
+        leaf device {
+          tailf:info "Select CE device.";
+          mandatory true;
+          type leafref {
+            path "/ncs:devices/ncs:device/ncs:name";
+          }
+        }
+
+        leaf interface {
+          tailf:info "Select provider-facing GigabitEthernet interface on CE router.";
+          mandatory true;
+          type leafref {
+            path "deref(../device)/../ncs:config/ios:interface/ios:GigabitEthernet/ios:name";
+          }
+        }
+
+        leaf ip {
+          tailf:info "Set IP address of CE router on provider-facing interface (/30 subnets are used).";
+          mandatory true;
+          type inet:ipv4-address;
+        }
+        
+        leaf ipv6 {
+          tailf:info "Set IPv6 address of CE router on provider-facing interface (/64 subnets are used).";
+          type inet:ipv6-address;
+        }
+
+        leaf-list static {
+          tailf:info "Enter IPv4 or IPv6 prefixes to be statically routed towards the provider.";
+          type inet:ip-prefix;
+        }
+
+      }
+    }
+  }
+}

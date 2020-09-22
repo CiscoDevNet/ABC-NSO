@@ -1,0 +1,37 @@
+l3vpn acme-compan5
+ site london
+  vlan-id 101
+  pe device       core-rtr01
+  pe interface-to-ce 0/0/0/2
+  pe address      10.10.1.1
+  pe routing bgp true
+  pe routing redistribute connected
+  ce device       dist-rtr01
+  ce interface-to-pe 2
+  ce address      10.10.1.2
+  ce asn          65001
+  ce routing static 0.0.0.0 0.0.0.0
+  ce routing bgp true
+  ce routing network 1.1.1.1 255.255.255.255
+  !
+  ce routing network 10.3.0.1 255.255.255.255
+  !
+ !
+ site new-york
+  vlan-id 101
+  pe device       core-rtr02
+  pe interface-to-ce 0/0/0/3
+  pe address      10.10.1.5
+  pe routing bgp true
+  pe routing redistribute connected
+  ce device       dist-rtr02
+  ce interface-to-pe 3
+  ce address      10.10.1.6
+  ce asn          65001
+  ce routing bgp true
+  ce routing network 2.2.2.2 255.255.255.255
+  !
+  ce routing network 10.4.0.1 255.255.255.255
+  !
+ !
+!

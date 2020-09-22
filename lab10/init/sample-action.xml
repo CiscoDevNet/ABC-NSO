@@ -1,0 +1,7 @@
+<action xmlns="http://tail-f.com/ns/netconf/actions/1.0">
+  <data>
+    <devices xmlns="http://tail-f.com/ns/ncs">
+        <check-sync/>
+    </devices>
+  </data>
+</action>

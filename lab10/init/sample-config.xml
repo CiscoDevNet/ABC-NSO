@@ -1,0 +1,5 @@
+<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <user xmlns="http://tail-f.com/ns/aaa/1.1">
+    <name>test2</name>
+  </user>
+</config>

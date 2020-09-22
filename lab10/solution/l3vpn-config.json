@@ -1,0 +1,52 @@
+{
+  "l3vpn:l3vpn": [
+    {
+      "vpn-name": "VPN1",
+      "vpn": {
+        "vpn-id": 100,
+        "vpn-description": "VPN instance for ACME",
+        "customer": "ACME"
+      },
+      "link": [
+        {
+          "link-name": "link1",
+          "link-id": 1,
+          "link-description": "link1 configuration",
+          "bgp": true,
+          "vlan": 1001,
+          "pe": {
+            "device": "core-rtr01",
+            "interface": "Gi0/0/0/2",
+            "ip": "10.1.1.1",
+            "ipv6": "2001:1::1"
+          },
+          "ce": {
+            "device": "dist-rtr01",
+            "interface": "Gi2",
+            "ip": "10.1.1.2",
+            "ipv6": "2001:1::2"
+          }
+        },
+        {
+          "link-name": "link2",
+          "link-id": 2,
+          "link-description": "link2 configuration",
+          "bgp": true,
+          "vlan": 1000,
+          "pe": {
+            "device": "core-rtr02",
+            "interface": "Gi0/0/0/3",
+            "ip": "10.2.1.1",
+            "ipv6": "2002:2::1"
+          },
+          "ce": {
+            "device": "dist-rtr02",
+            "interface": "Gi3",
+            "ip": "10.2.1.2",
+            "ipv6": "2001:2::2"
+          }
+        }
+      ]
+    }
+  ]
+}

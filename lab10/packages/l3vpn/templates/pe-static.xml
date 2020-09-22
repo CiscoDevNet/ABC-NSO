@@ -1,0 +1,32 @@
+<devices xmlns="http://tail-f.com/ns/ncs">
+  <device>
+    <name>{$PE_DEVICE}</name>
+    <config>
+      <router xmlns="http://tail-f.com/ned/cisco-ios-xr">
+        <static>
+          <vrf>
+            <name>{$VPN_NAME}</name>
+            <address-family>
+              <ipv4 when="{$PE_STATIC}">
+                <unicast>
+                  <routes-ip>
+                    <net>{$PE_STATIC}</net>
+                    <address>{$CE_IP}</address>
+                  </routes-ip>
+                </unicast>
+              </ipv4>
+              <ipv6 when="{$PE_STATIC_V6}">
+                <unicast>
+                  <routes-ip>
+                    <net>{$PE_STATIC_V6}</net>
+                    <address>{$CE_IPV6}</address>
+                  </routes-ip>
+                </unicast>
+              </ipv6>
+            </address-family>
+          </vrf>
+        </static>
+      </router>
+    </config>
+  </device>
+</devices>

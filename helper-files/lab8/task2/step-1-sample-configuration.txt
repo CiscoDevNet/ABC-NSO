@@ -1,0 +1,7 @@
+conf
+l3vpn CUST101
+ vpn vpn-id      101
+ vpn vpn-description "TEST L3VPN SERVICE INSTANCE"
+ link link1
+ link link2
+commit dry-run

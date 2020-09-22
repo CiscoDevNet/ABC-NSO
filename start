@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -e
+
+cd `dirname $0`
+BASEDIR=`pwd`
+LABNAME=$1
+LAB="$BASEDIR/$LABNAME"
+LABDIR="$HOME/nso-$LABNAME"
+
+init_common() {
+	for f in `ls $BASEDIR/common/init-*.sh | sort`; do
+		. $f
+	done
+}
+
+show_help() {
+	echo "Usage: $0 <LAB>"
+	echo "Setup and start specified lab environment:"
+	ls -d lab* 2>/dev/null | xargs -n 1 echo "  "
+}
+
+if [ -e "$LAB/init.sh" ]; then
+	. $LAB/init.sh
+	echo "System is ready to use"
+else
+	show_help >&2
+	exit 2
+fi

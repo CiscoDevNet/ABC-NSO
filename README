@@ -1,0 +1,7 @@
+To prepare the lab environment, call the 'start' script with desired lab, e.g.:
+
+$ sh start some-lab
+
+It expects NSO installation in ~/nso, which must include all the required NEDs.
+Everything will deploy to the ~/nso-<lab> directory, with an ~/nso-lab symlink
+for convenience.

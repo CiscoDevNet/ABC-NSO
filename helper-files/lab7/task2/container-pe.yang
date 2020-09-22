@@ -1,0 +1,24 @@
+      container pe {
+        leaf device {
+          type ######### {
+            path "/ncs:devices/ncs:device/ncs:name";
+          }
+        }
+
+        leaf interface {
+          type #########;
+        }
+
+        leaf ip {
+          type inet:#########;
+        }
+
+        leaf ipv6 {
+          type inet:#########;
+        }
+
+        leaf-list static {
+          type inet:#########;
+        }
+
+      }
