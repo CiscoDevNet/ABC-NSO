@@ -15,7 +15,7 @@ git clone https://github.com/CiscoDevNet/ABC-NSO.git
 To prepare the lab environment, call the `start` script with the desired lab. e.g.:
 
 ```sh
-$ sh start some-lab
+$ sh start lab-<name>
 ```
 
 The script expects NSO to be installed in `~/nso`, which must include all of the required NEDs.  Everything will deploy to the `~/nso-<lab>` directory, with a `~/nso-lab` symlink for convenience.
