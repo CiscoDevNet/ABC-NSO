@@ -1,0 +1,3 @@
+curl -u admin:admin -H 'Accept: application/yang-data+json' http://localhost:8080/restconf/data
+
+curl -u admin:admin -H 'Accept: application/yang-data+json' http://localhost:8080/restconf/data/tailf-ncs:devices/device=core-rtr01

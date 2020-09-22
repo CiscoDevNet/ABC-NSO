@@ -1,0 +1,37 @@
+conf
+l3vpn CUST101
+ vpn vpn-id      101
+ vpn vpn-description "TEST L3VPN SERVICE INSTANCE"
+ link link1
+  link-id          1
+  link-description "Site 1"
+  vlan             101
+  pe device core-rtr01
+  pe interface GigabitEthernet0/0/0/2
+  pe ip     10.1.1.1
+  pe static 10.1.0.0/16
+  !
+  ce device dist-rtr01
+  ce interface GigabitEthernet2
+  ce ip     10.1.1.2
+  ce static 0.0.0.0/0
+  !
+ !
+ link link2
+  link-id          1
+  link-description "Site 2"
+  vlan             101
+  pe device core-rtr01
+  pe interface GigabitEthernet0/0/0/3
+  pe ip     10.1.1.5
+  pe static 10.1.0.0/16
+  !
+  ce device dist-rtr01
+  ce interface GigabitEthernet3
+  ce ip     10.1.1.6
+  ce static 0.0.0.0/0
+  !
+ !
+!
+commit dry-run
+abort

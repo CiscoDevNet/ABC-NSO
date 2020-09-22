@@ -1,0 +1,131 @@
+module l3vpn {
+  namespace "http://com/example/l3vpn";
+  prefix l3vpn;
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+  import tailf-ncs {
+    prefix ncs;
+  }
+  import tailf-common {
+    prefix tailf;
+  }
+
+  list l3vpn {
+    key vpn-name;
+
+    uses ncs:service-data;
+    ncs:servicepoint "l3vpn";
+
+    leaf vpn-name {
+      type string;
+    }
+    
+
+    list site {
+      key site-name;
+      description "Each site is configured with PE and CE specific parameters";
+
+      leaf site-name {
+        tailf:info "Specify a name for a vpn site";
+        type string;
+      }
+
+      leaf vlan-id {
+        tailf:info "Select the 802.1q VLAN to be used between PE and CE.";
+        mandatory true;
+        type uint32;
+      }
+
+      container pe {
+        tailf:info "Enter Provider Edge (PE) device specific configuration.";
+
+        leaf device { 
+          type leafref {
+            path "/ncs:devices/ncs:device/ncs:name";
+          }
+	      }
+        
+        leaf interface-to-ce {
+          type string;
+        }
+
+        leaf address {
+          type inet:ipv4-address;
+        }
+        
+        container routing {
+          leaf-list static {
+            tailf:info "Static IPv4 prefixes pointing towards CE router from PE router.";
+            type inet:ip-prefix;
+          }
+          leaf bgp {
+            tailf:info "Enable BGP between CE and PE router.";
+            type boolean;
+          }
+          container redistribute {
+            when "../bgp";
+            leaf connected {
+              type empty;
+            }
+            leaf static {
+              type empty;
+            }
+          }
+        }
+      }
+
+      container ce {
+        description "Customer Edge specific configuration";
+
+        leaf device {
+          tailf:info "Select the CE Router.";
+          type leafref {
+            path "/ncs:devices/ncs:device/ncs:name";
+          }
+        }
+
+        leaf interface-to-pe {
+          tailf:info "Provider-facing Interface on the selected CE router.";
+          type string;
+        }
+
+        leaf address {
+          tailf:info "CE IP address on the provider-facing interface.";
+          type inet:ipv4-address;
+        }
+
+        leaf asn {
+          type uint32;
+        }
+        
+        container routing {
+          leaf bgp {
+            type boolean;
+          }
+          list network {
+            key "address mask";
+            leaf address {
+              type inet:ipv4-address;
+            }
+            leaf mask {
+              type inet:ipv4-address;
+            }
+          }
+
+          list static {
+            key "prefix mask";
+            tailf:info "Static IPv4 and IPv6 routes pointing to MPLS VPN from CE router.";
+            leaf prefix {
+              type inet:ipv4-address;
+            }
+            leaf mask {
+              type inet:ipv4-address;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+<action xmlns="http://tail-f.com/ns/netconf/actions/1.0">
+  <data>
+    <l3vpn xmlns="http://com/example/l3vpn">
+      <vpn-name>VPN2</vpn-name>
+      <link>
+        <link-name>link1</link-name>
+        <check-connectivity/>
+      </link>
+    </l3vpn>
+  </data>
+</action>

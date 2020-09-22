@@ -1,0 +1,38 @@
+interface GigabitEthernet2
+ description VPN uplink
+ no ip address
+ no shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ service instance 101 ethernet
+  encapsulation dot1q 101
+  rewrite ingress tag pop 1 symmetric
+  bridge-domain 101
+ !
+!
+!
+interface BDI101
+ ip address 192.168.101.2 255.255.255.252
+ ipv6 address FD12:0:0:101::2/126
+ no mop enabled
+ no mop sysid
+ no shutdown
+!
+ip route 0.0.0.0 0.0.0.0 192.168.101.2
+ipv6 route ::/0 FD12:0:0:101::1
+!
+router bgp 65001
+ bgp log-neighbor-changes
+ neighbor 192.168.101.1 remote-as 64497
+ !
+ address-family ipv4
+  neighbor 192.168.101.1 activate
+  neighbor 192.168.101.1 as-override
+  neighbor 192.168.101.1 allowas-in 1
+ exit-address-family
+ !
+ address-family ipv6
+  neighbor 192.168.101.1 activate
+ exit-address-family
+!

@@ -1,0 +1,16 @@
+    container vpn {
+    
+      leaf vpn-id {
+        type #########;
+      }
+
+      leaf vpn-description {
+        type #########;
+      }
+      
+      leaf customer {
+        type ######### {
+          path "/ncs:customers/ncs:customer/ncs:id";
+        }
+      }
+    }

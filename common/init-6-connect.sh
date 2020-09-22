@@ -1,4 +1,5 @@
-# Connect devices
+# Prepare NSO to manage connected devices (update ssh keys, sync)
+# and push config from CDB to devices in <lab>/push.list
 
 runcli() {
 	ERROR=`echo "$1 | begin XXXX" | ncs_cli -NCu admin`

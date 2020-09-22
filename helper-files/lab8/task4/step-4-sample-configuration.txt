@@ -1,0 +1,45 @@
+conf
+l3vpn CUST101
+ vpn 
+  vpn-id      101
+  vpn-description "TEST L3VPN SERVICE INSTANCE"
+ !
+ link link1
+  link-id          1
+  link-description "Site 1"
+  bgp              true
+  vlan             101
+  pe
+   device core-rtr01
+   interface 0/0/0/2
+   ip     10.1.1.1
+   static 10.1.0.0/16
+  !
+  ce 
+   device dist-rtr01
+   interface 2
+   ip     10.1.1.2
+   static 0.0.0.0/0
+  !
+ !
+ link link2
+  link-id          2
+  link-description "Site 2"
+  bgp              true
+  vlan             101
+  pe
+   device core-rtr01
+   interface 0/0/0/3
+   ip     10.1.1.5
+   static 10.1.0.0/16
+  !
+  ce
+   device dist-rtr02
+   interface 3
+   ip     10.1.1.6
+   static 0.0.0.0/0
+  !
+ !
+!
+commit dry-run
+abort

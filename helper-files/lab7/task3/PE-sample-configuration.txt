@@ -1,0 +1,66 @@
+vrf CUST101
+ address-family ipv4 unicast
+  import route-target
+   64497:101
+  !
+  export route-target
+   64497:101
+  !
+  maximum prefix 1000 80
+ !
+ address-family ipv6 unicast
+  import route-target
+   64497:101
+  !
+  export route-target
+   64497:101
+  !
+  maximum prefix 1000 80
+ !
+!
+interface GigabitEthernet0/0/0/2.101
+ vrf CUST101
+ ipv4 address 192.168.101.1 255.255.255.252
+ ipv6 address fd12:0:0:101::1/64
+ encapsulation dot1q 101
+!
+router static
+ vrf CUST101
+  address-family ipv4 unicast
+   10.101.1.0/24 192.168.101.2
+  !
+  address-family ipv6 unicast
+   fd12:101::/48 fd12:0:0:101::2
+  !
+ !
+!
+route-policy PASS
+  pass
+end-policy
+!
+router bgp 64497
+ vrf CUST101
+  rd 64497:101
+  address-family ipv4 unicast
+   redistribute connected
+  !
+  address-family ipv6 unicast
+   redistribute connected
+  !
+  neighbor 192.168.101.2
+   remote-as 65001
+   address-family ipv4 unicast
+    route-policy PASS in
+    route-policy PASS out
+    allowas-in 1
+    as-override
+   !
+   address-family ipv6 unicast
+    route-policy PASS in
+    route-policy PASS out
+    allowas-in 1
+    as-override
+   !
+  !
+ !
+!

@@ -1,0 +1,31 @@
+    list link {
+      key link-name;
+
+      leaf link-name {
+        type #########;
+      }
+
+      leaf link-id {
+        type #########;
+      }
+
+      leaf link-description {
+        type #########;
+      }
+
+      leaf bgp {
+        type #########;
+      }
+      
+      leaf vlan {
+        type #########;
+      }
+
+      container pe {
+        ...
+      }
+
+      container ce {
+        ...
+      }
+    }
