@@ -128,16 +128,20 @@
                                 <address-family>
                                     <ipv4>
                                     <unicast>
+					<?set ce-address = {string(ce/address)}?>
+					<?foreach {pe/routing/static}?>
                                         <routes-ip>
-                                            <net>{pe/routing/static}</net>
-                                            <address>{string(ce/address)}</address>
+                                            <net>{current()}</net>
+                                            <address>{$ce-address}</address>
                                         </routes-ip>
+					<?end?>
                                     </unicast>
                                     </ipv4>
                                 </address-family>
                                 </vrf>
                             </static>
                         <?end?>
+			<?switch-context current-site?>
                     </router>
                 
             </config>
