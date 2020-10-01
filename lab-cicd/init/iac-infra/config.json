@@ -1,0 +1,7 @@
+{
+  "host": "10.10.20.50",
+  "username": "admin",
+  "password": "admin",
+  "restconf_port": 8080,
+  "netconf_port": 2022
+}

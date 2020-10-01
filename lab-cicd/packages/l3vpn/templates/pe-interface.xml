@@ -1,0 +1,34 @@
+<devices xmlns="http://tail-f.com/ns/ncs">
+  <device>
+    <name>{$PE_DEVICE}</name>
+    <config>
+      <interface xmlns="http://tail-f.com/ned/cisco-ios-xr">
+        <GigabitEthernet-subinterface>
+          <GigabitEthernet>
+            <id>{$PE_INTF_NUM}.{$LINK_VLAN}</id>
+            <encapsulation>
+              <dot1q>
+                <vlan-id>{$LINK_VLAN}</vlan-id>
+              </dot1q>
+            </encapsulation>
+            <vrf>{$VPN_NAME}</vrf>
+            <ipv4>
+              <address>
+                <ip>{$PE_IP}</ip>
+                <mask>255.255.255.252</mask>
+              </address>
+            </ipv4>
+            <ipv6>
+              <address>
+                <prefix-list>
+                  <prefix>{$PE_IPV6}/64</prefix>
+                </prefix-list>
+              </address>
+            </ipv6>
+          </GigabitEthernet>
+        </GigabitEthernet-subinterface>
+      </interface>
+    </config>
+  </device>
+</devices>
+

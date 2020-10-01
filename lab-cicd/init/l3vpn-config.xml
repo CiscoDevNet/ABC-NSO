@@ -1,0 +1,48 @@
+<config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <l3vpn xmlns="http://com/example/l3vpn">
+    <vpn-name>VPN2</vpn-name>
+    <vpn>
+      <vpn-id>200</vpn-id>
+      <vpn-description>VPN instance for ACME</vpn-description>
+      <customer>ACME</customer>
+    </vpn>
+    <link>
+      <link-name>link1</link-name>
+      <link-id>1</link-id>
+      <link-description>link1 configuration</link-description>
+      <bgp>true</bgp>
+      <vlan>2000</vlan>
+      <pe>
+        <device>core-rtr01</device>
+        <interface>Gi0/0/0/2</interface>
+        <ip>192.168.1.1</ip>
+        <ipv6>2002:1::1</ipv6>
+      </pe>
+      <ce>
+        <device>dist-rtr01</device>
+        <interface>Gi2</interface>
+        <ip>192.168.1.2</ip>
+        <ipv6>2002:1::2</ipv6>
+      </ce>
+    </link>
+    <link>
+      <link-name>link2</link-name>
+      <link-id>2</link-id>
+      <link-description>link2 configuration</link-description>
+      <bgp>true</bgp>
+      <vlan>2000</vlan>
+      <pe>
+        <device>core-rtr02</device>
+        <interface>Gi0/0/0/3</interface>
+        <ip>192.168.2.1</ip>
+        <ipv6>2002:2::1</ipv6>
+      </pe>
+      <ce>
+        <device>dist-rtr02</device>
+        <interface>Gi3</interface>
+        <ip>192.168.2.2</ip>
+        <ipv6>2002:2::2</ipv6>
+      </ce>
+    </link>
+  </l3vpn>
+</config>
