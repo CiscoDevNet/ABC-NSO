@@ -1,0 +1,30 @@
+version: "3"
+sevices:
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    links:
+      - influxdb
+  influxdb:
+    container_name: influxdb
+    image: influxdb:1.8.0
+    ports:
+      - "8083:8083"
+      - "8086:8086"
+    volumes:
+      - influxdb-storage:/var/lib/influxdb
+  telegraf:
+    container_name: telegraf
+    image: telegraf:1.15.3
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /proc:/host/proc
+      - ${PWD}/conf/telegraf.conf:/etc/telegraf.conf
+
+volumes:
+  influxdb-storage:
+  grafana-storage:
