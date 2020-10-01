@@ -49,7 +49,6 @@ class LinkAction(Action):
                 continue
 
             output.output += f'\n{l.link_name} '
-            host.ping(l.ce.ip)
             try:
                 host.ping(l.ce.ip)
                 output.output += 'PASS'
