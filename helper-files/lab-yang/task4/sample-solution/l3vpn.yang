@@ -38,7 +38,7 @@ module l3vpn {
       }
       
       leaf customer {
-        tailf:info "iSelect a customer for this service instance.";
+        tailf:info "Select a customer for this service instance.";
         type leafref {
           path "/ncs:customers/ncs:customer/ncs:id";
         }
