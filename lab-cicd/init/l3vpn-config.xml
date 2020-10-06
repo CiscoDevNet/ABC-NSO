@@ -21,7 +21,7 @@
       <ce>
         <device>dist-rtr01</device>
         <interface>Gi2</interface>
-        <ip>192.168.1.2</ip>
+        <ip>192.169.1.2</ip>
         <ipv6>2002:1::2</ipv6>
       </ce>
     </link>
