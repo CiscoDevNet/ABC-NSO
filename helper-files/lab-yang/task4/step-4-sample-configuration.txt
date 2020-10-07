@@ -28,7 +28,7 @@ l3vpn CUST101
   bgp              true
   vlan             101
   pe
-   device core-rtr01
+   device core-rtr02
    interface 0/0/0/3
    ip     10.1.1.5
    static 10.1.0.0/16
