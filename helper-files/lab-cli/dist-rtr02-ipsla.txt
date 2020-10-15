@@ -1,0 +1,4 @@
+ip sla 10
+ icmp-echo 10.1.1.2
+ frequency 5
+ip sla schedule 10 life forever start-time now

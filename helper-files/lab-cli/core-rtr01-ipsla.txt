@@ -1,0 +1,14 @@
+ipsla
+ operation 10
+  type icmp echo
+   vrf CUST100
+   source address 10.1.1.1
+   destination address 10.1.1.5
+   frequency 5
+  !
+ !
+ schedule operation 10
+  start-time now
+  life forever
+ !
+!
