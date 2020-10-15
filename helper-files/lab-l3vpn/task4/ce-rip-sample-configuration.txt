@@ -1,0 +1,9 @@
+devices device dist-rtr01
+ config
+  router rip
+   version 2
+   address-family ipv4 unicast
+    network 10.1.1.2
+  !
+ !
+!

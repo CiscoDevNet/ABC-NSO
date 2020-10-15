@@ -1,0 +1,1560 @@
+<config xmlns="http://tail-f.com/ns/config/1.0">
+  <devices xmlns="http://tail-f.com/ns/ncs">
+    <global-settings>
+      <trace-dir>./logs</trace-dir>
+    </global-settings>
+    <authgroups>
+      <group>
+        <name>default</name>
+        <umap>
+          <local-user>admin</local-user>
+          <remote-name>admin</remote-name>
+          <remote-password>$9$pcj3uAur+SIfIgHIB7F2Hk2n15w6HwJkLH0/gVdxOyI=</remote-password>
+        </umap>
+        <umap>
+          <local-user>oper</local-user>
+          <remote-name>oper</remote-name>
+          <remote-password>$9$/sfQ696rSVRG0juO9vopFCnTXoqEDf0CL3NHAOeMLUE=</remote-password>
+        </umap>
+      </group>
+      <group>
+        <name>labadmin</name>
+        <default-map>
+          <remote-name>cisco</remote-name>
+          <remote-password>$9$WYoHTreK1nueQxmQ5NMx2SatV230RG2QPo+okHFpsK0=</remote-password>
+          <remote-secondary-password>$9$hOObHKc6kvkKZyFtOJj+4h415bBQGE+nLyNDXNzGTUM=</remote-secondary-password>
+        </default-map>
+      </group>
+      <snmp-group>
+        <name>default</name>
+        <default-map>
+          <community-name>public</community-name>
+        </default-map>
+        <umap>
+          <local-user>admin</local-user>
+          <usm>
+            <remote-name>admin</remote-name>
+            <security-level>auth-priv</security-level>
+            <auth>
+              <sha>
+                <remote-password>$9$tbWZqN7EqO9OEwkT7z4CrQRoHhyCIjonwELlrP9SA84=</remote-password>
+              </sha>
+            </auth>
+            <priv>
+              <aes>
+                <remote-password>$9$ct+Q8A/HgdbA96d0j0Vw55pwqh1wgHRMcvsbGt6nsj8=</remote-password>
+              </aes>
+            </priv>
+          </usm>
+        </umap>
+      </snmp-group>
+    </authgroups>
+    <mib-group>
+      <name>snmp</name>
+      <mib-module>SNMP*</mib-module>
+    </mib-group>
+    <device>
+      <name>core-rtr01</name>
+      <address>10.10.20.173</address>
+      <ssh>
+        <host-key-verification>none</host-key-verification>
+      </ssh>
+      <authgroup>labadmin</authgroup>
+      <device-type>
+        <cli>
+          <ned-id xmlns:cisco-iosxr-cli-7.20="http://tail-f.com/ns/ned-id/cisco-iosxr-cli-7.20">cisco-iosxr-cli-7.20:cisco-iosxr-cli-7.20</ned-id>
+          <protocol>telnet</protocol>
+        </cli>
+      </device-type>
+      <state>
+        <admin-state>unlocked</admin-state>
+      </state>
+      <config>
+        <admin xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <username>
+            <name>cisco</name>
+            <secret>
+              <encryption>5</encryption>
+              <password>$1$.61O$a86mHQDJF31NbEiTL2bX8/</password>
+            </secret>
+          </username>
+        </admin>
+        <hostname xmlns="http://tail-f.com/ned/cisco-ios-xr">core-rtr01</hostname>
+        <address-family xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <ipv4>
+            <unicast/>
+          </ipv4>
+          <ipv6>
+            <unicast/>
+          </ipv6>
+        </address-family>
+        <vrf xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <vrf-list>
+            <name>Mgmt-intf</name>
+            <address-family>
+              <ipv4>
+                <unicast>
+                </unicast>
+              </ipv4>
+              <ipv6>
+                <unicast>
+                </unicast>
+              </ipv6>
+            </address-family>
+          </vrf-list>
+        </vrf>
+        <logging xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <console>disable</console>
+        </logging>
+        <service xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <timestamps>
+            <debug>
+              <datetime>
+                <msec/>
+              </datetime>
+            </debug>
+            <log>
+              <datetime>
+                <msec/>
+              </datetime>
+            </log>
+          </timestamps>
+        </service>
+        <domain xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <lookup>
+            <disable/>
+          </lookup>
+          <name>virl.info</name>
+        </domain>
+        <telnet xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <vrf>
+            <name>Mgmt-intf</name>
+            <telnet-server-list>
+              <af>ipv4</af>
+              <server>
+                <max-servers>10</max-servers>
+              </server>
+            </telnet-server-list>
+          </vrf>
+          <vrf>
+            <name>default</name>
+            <telnet-server-list>
+              <af>ipv4</af>
+              <server>
+                <max-servers>10</max-servers>
+              </server>
+            </telnet-server-list>
+          </vrf>
+        </telnet>
+        <line xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <console>
+            <exec-timeout>
+              <minutes>0</minutes>
+              <seconds>0</seconds>
+            </exec-timeout>
+            <absolute-timeout>0</absolute-timeout>
+            <session-timeout>
+              <minutes>0</minutes>
+            </session-timeout>
+          </console>
+          <default>
+            <exec-timeout>
+              <minutes>0</minutes>
+              <seconds>0</seconds>
+            </exec-timeout>
+            <absolute-timeout>0</absolute-timeout>
+            <session-timeout>
+              <minutes>0</minutes>
+            </session-timeout>
+          </default>
+          <template>
+            <name>vty</name>
+            <timestamp>
+            </timestamp>
+            <exec-timeout>
+              <minutes>720</minutes>
+              <seconds>0</seconds>
+            </exec-timeout>
+          </template>
+        </line>
+        <vty-pool xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <default>
+            <first-vty>0</first-vty>
+            <last-vty>50</last-vty>
+          </default>
+        </vty-pool>
+        <control-plane xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <management-plane>
+            <inband>
+              <interface>
+                <name>all</name>
+                <allow>
+                  <proto>all</proto>
+                </allow>
+              </interface>
+            </inband>
+          </management-plane>
+        </control-plane>
+        <ssh xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <server>
+            <v2/>
+          </server>
+        </ssh>
+        <interface xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <Loopback>
+            <id>0</id>
+            <description>to</description>
+            <ipv4>
+              <address>
+                <ip>172.16.31.173</ip>
+                <mask>255.255.255.255</mask>
+              </address>
+            </ipv4>
+            <ipv6>
+              <address>
+                <prefix-list>
+                  <prefix>fd12:0:0:1::173/128</prefix>
+                </prefix-list>
+                <prefix-list>
+                  <prefix>fd12:0:0:31::173/128</prefix>
+                </prefix-list>
+              </address>
+            </ipv6>
+          </Loopback>
+          <MgmtEth>
+            <id>0/0/CPU0/0</id>
+            <description>to port4.sandbox-backend</description>
+            <vrf>Mgmt-intf</vrf>
+            <ipv4>
+              <address>
+                <ip>10.10.20.173</ip>
+                <mask>255.255.255.0</mask>
+              </address>
+            </ipv4>
+          </MgmtEth>
+          <GigabitEthernet>
+            <id>0/0/0/0</id>
+            <description>L3 Link to core-rtr02</description>
+            <ipv4>
+              <address>
+                <ip>172.16.252.37</ip>
+                <mask>255.255.255.252</mask>
+              </address>
+            </ipv4>
+          </GigabitEthernet>
+          <GigabitEthernet>
+            <id>0/0/0/1</id>
+            <description>L3 Link to edge-sw01</description>
+            <ipv4>
+              <address>
+                <ip>172.16.253.2</ip>
+                <mask>255.255.255.248</mask>
+              </address>
+            </ipv4>
+          </GigabitEthernet>
+          <GigabitEthernet>
+            <id>0/0/0/2</id>
+            <description>L3 Link to dist-rtr01</description>
+            <ipv4>
+              <address>
+                <ip>172.16.252.22</ip>
+                <mask>255.255.255.252</mask>
+              </address>
+            </ipv4>
+            <ipv6>
+              <enable/>
+            </ipv6>
+          </GigabitEthernet>
+          <GigabitEthernet>
+            <id>0/0/0/3</id>
+            <description>L3 Link to dist-rtr02</description>
+            <ipv4>
+              <address>
+                <ip>172.16.252.30</ip>
+                <mask>255.255.255.252</mask>
+              </address>
+            </ipv4>
+          </GigabitEthernet>
+        </interface>
+        <router xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <static>
+            <address-family>
+              <ipv4>
+                <unicast>
+                  <routes-ip>
+                    <net>0.0.0.0/0</net>
+                    <address>172.16.253.4</address>
+                  </routes-ip>
+                </unicast>
+              </ipv4>
+            </address-family>
+            <vrf>
+              <name>Mgmt-intf</name>
+              <address-family>
+                <ipv4>
+                  <unicast>
+                    <routes-ip>
+                      <net>0.0.0.0/0</net>
+                      <address>10.10.20.254</address>
+                    </routes-ip>
+                  </unicast>
+                </ipv4>
+              </address-family>
+            </vrf>
+          </static>
+          <ospf>
+            <name>1</name>
+            <area>
+              <id>0</id>
+              <interface>
+                <name>GigabitEthernet0/0/0/0</name>
+              </interface>
+              <interface>
+                <name>GigabitEthernet0/0/0/1</name>
+              </interface>
+              <interface>
+                <name>GigabitEthernet0/0/0/2</name>
+              </interface>
+              <interface>
+                <name>GigabitEthernet0/0/0/3</name>
+              </interface>
+              <interface>
+                <name>Loopback0</name>
+              </interface>
+            </area>
+          </ospf>
+          <bgp>
+            <bgp-no-instance>
+              <id>64497</id>
+              <bgp>
+                <router-id>172.16.31.173</router-id>
+              </bgp>
+              <address-family>
+                <ipv4>
+                  <unicast>
+                  </unicast>
+                </ipv4>
+                <vpnv4>
+                  <unicast>
+                  </unicast>
+                </vpnv4>
+                <vpnv6>
+                  <unicast>
+                  </unicast>
+                </vpnv6>
+              </address-family>
+              <neighbor>
+                <id>172.16.31.174</id>
+                <remote-as>64497</remote-as>
+                <update-source>
+                  <Loopback>0</Loopback>
+                </update-source>
+                <address-family>
+                  <ipv4>
+                    <unicast>
+                    </unicast>
+                  </ipv4>
+                  <vpnv4>
+                    <unicast>
+                    </unicast>
+                  </vpnv4>
+                  <vpnv6>
+                    <unicast>
+                    </unicast>
+                  </vpnv6>
+                </address-family>
+              </neighbor>
+            </bgp-no-instance>
+          </bgp>
+        </router>
+        <mpls xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <ldp>
+            <interface>
+              <name>GigabitEthernet0/0/0/0</name>
+            </interface>
+          </ldp>
+        </mpls>
+        <xyzroot xmlns="http://tail-f.com/ned/cisco-ios-xr">0</xyzroot>
+      </config>
+    </device>
+    <device>
+      <name>core-rtr02</name>
+      <address>10.10.20.174</address>
+      <ssh>
+        <host-key-verification>none</host-key-verification>
+      </ssh>
+      <authgroup>labadmin</authgroup>
+      <device-type>
+        <cli>
+          <ned-id xmlns:cisco-iosxr-cli-7.20="http://tail-f.com/ns/ned-id/cisco-iosxr-cli-7.20">cisco-iosxr-cli-7.20:cisco-iosxr-cli-7.20</ned-id>
+          <protocol>telnet</protocol>
+        </cli>
+      </device-type>
+      <state>
+        <admin-state>unlocked</admin-state>
+      </state>
+      <config>
+        <admin xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <username>
+            <name>cisco</name>
+            <secret>
+              <encryption>5</encryption>
+              <password>$1$vkqS$iRwTNgVvGq9LeflAHVF45.</password>
+            </secret>
+          </username>
+        </admin>
+        <hostname xmlns="http://tail-f.com/ned/cisco-ios-xr">core-rtr02</hostname>
+        <address-family xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <ipv4>
+            <unicast/>
+          </ipv4>
+          <ipv6>
+            <unicast/>
+          </ipv6>
+        </address-family>
+        <vrf xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <vrf-list>
+            <name>Mgmt-intf</name>
+            <address-family>
+              <ipv4>
+                <unicast>
+                </unicast>
+              </ipv4>
+              <ipv6>
+                <unicast>
+                </unicast>
+              </ipv6>
+            </address-family>
+          </vrf-list>
+        </vrf>
+        <logging xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <console>disable</console>
+        </logging>
+        <service xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <timestamps>
+            <debug>
+              <datetime>
+                <msec/>
+              </datetime>
+            </debug>
+            <log>
+              <datetime>
+                <msec/>
+              </datetime>
+            </log>
+          </timestamps>
+        </service>
+        <domain xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <lookup>
+            <disable/>
+          </lookup>
+          <name>virl.info</name>
+        </domain>
+        <telnet xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <vrf>
+            <name>Mgmt-intf</name>
+            <telnet-server-list>
+              <af>ipv4</af>
+              <server>
+                <max-servers>10</max-servers>
+              </server>
+            </telnet-server-list>
+          </vrf>
+          <vrf>
+            <name>default</name>
+            <telnet-server-list>
+              <af>ipv4</af>
+              <server>
+                <max-servers>10</max-servers>
+              </server>
+            </telnet-server-list>
+          </vrf>
+        </telnet>
+        <line xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <console>
+            <exec-timeout>
+              <minutes>0</minutes>
+              <seconds>0</seconds>
+            </exec-timeout>
+            <absolute-timeout>0</absolute-timeout>
+            <session-timeout>
+              <minutes>0</minutes>
+            </session-timeout>
+          </console>
+          <default>
+            <exec-timeout>
+              <minutes>0</minutes>
+              <seconds>0</seconds>
+            </exec-timeout>
+            <absolute-timeout>0</absolute-timeout>
+            <session-timeout>
+              <minutes>0</minutes>
+            </session-timeout>
+          </default>
+          <template>
+            <name>vty</name>
+            <timestamp>
+            </timestamp>
+            <exec-timeout>
+              <minutes>720</minutes>
+              <seconds>0</seconds>
+            </exec-timeout>
+          </template>
+        </line>
+        <vty-pool xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <default>
+            <first-vty>0</first-vty>
+            <last-vty>50</last-vty>
+          </default>
+        </vty-pool>
+        <control-plane xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <management-plane>
+            <inband>
+              <interface>
+                <name>all</name>
+                <allow>
+                  <proto>all</proto>
+                </allow>
+              </interface>
+            </inband>
+          </management-plane>
+        </control-plane>
+        <ssh xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <server>
+            <v2/>
+          </server>
+        </ssh>
+        <interface xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <Loopback>
+            <id>0</id>
+            <description>Control Plane ID</description>
+            <ipv4>
+              <address>
+                <ip>172.16.31.174</ip>
+                <mask>255.255.255.255</mask>
+              </address>
+            </ipv4>
+            <ipv6>
+              <address>
+                <prefix-list>
+                  <prefix>fd12:0:0:1::174/128</prefix>
+                </prefix-list>
+                <prefix-list>
+                  <prefix>fd12:0:0:31::174/128</prefix>
+                </prefix-list>
+              </address>
+            </ipv6>
+          </Loopback>
+          <MgmtEth>
+            <id>0/0/CPU0/0</id>
+            <description>to port5.sandbox-backend</description>
+            <vrf>Mgmt-intf</vrf>
+            <ipv4>
+              <address>
+                <ip>10.10.20.174</ip>
+                <mask>255.255.255.0</mask>
+              </address>
+            </ipv4>
+          </MgmtEth>
+          <GigabitEthernet>
+            <id>0/0/0/0</id>
+            <description>L3 Link to core-rtr01</description>
+            <ipv4>
+              <address>
+                <ip>172.16.252.38</ip>
+                <mask>255.255.255.252</mask>
+              </address>
+            </ipv4>
+          </GigabitEthernet>
+          <GigabitEthernet>
+            <id>0/0/0/1</id>
+            <description>L3 Link to edge-sw01</description>
+            <ipv4>
+              <address>
+                <ip>172.16.253.3</ip>
+                <mask>255.255.255.248</mask>
+              </address>
+            </ipv4>
+          </GigabitEthernet>
+          <GigabitEthernet>
+            <id>0/0/0/2</id>
+            <description>L3 Link to dist-rtr01</description>
+            <ipv4>
+              <address>
+                <ip>172.16.252.26</ip>
+                <mask>255.255.255.252</mask>
+              </address>
+            </ipv4>
+          </GigabitEthernet>
+          <GigabitEthernet>
+            <id>0/0/0/3</id>
+            <description>L3 Link to dist-rtr02</description>
+            <ipv4>
+              <address>
+                <ip>172.16.252.34</ip>
+                <mask>255.255.255.252</mask>
+              </address>
+            </ipv4>
+          </GigabitEthernet>
+        </interface>
+        <router xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <static>
+            <address-family>
+              <ipv4>
+                <unicast>
+                  <routes-ip>
+                    <net>0.0.0.0/0</net>
+                    <address>172.16.253.4</address>
+                  </routes-ip>
+                </unicast>
+              </ipv4>
+            </address-family>
+            <vrf>
+              <name>Mgmt-intf</name>
+              <address-family>
+                <ipv4>
+                  <unicast>
+                    <routes-ip>
+                      <net>0.0.0.0/0</net>
+                      <address>10.10.20.254</address>
+                    </routes-ip>
+                  </unicast>
+                </ipv4>
+              </address-family>
+            </vrf>
+          </static>
+          <ospf>
+            <name>1</name>
+            <area>
+              <id>0</id>
+              <interface>
+                <name>GigabitEthernet0/0/0/0</name>
+              </interface>
+              <interface>
+                <name>GigabitEthernet0/0/0/1</name>
+              </interface>
+              <interface>
+                <name>GigabitEthernet0/0/0/2</name>
+              </interface>
+              <interface>
+                <name>GigabitEthernet0/0/0/3</name>
+              </interface>
+              <interface>
+                <name>Loopback0</name>
+              </interface>
+            </area>
+          </ospf>
+          <bgp>
+            <bgp-no-instance>
+              <id>64497</id>
+              <bgp>
+                <router-id>172.16.31.174</router-id>
+              </bgp>
+              <address-family>
+                <ipv4>
+                  <unicast>
+                  </unicast>
+                </ipv4>
+                <vpnv4>
+                  <unicast>
+                  </unicast>
+                </vpnv4>
+                <vpnv6>
+                  <unicast>
+                  </unicast>
+                </vpnv6>
+              </address-family>
+              <neighbor>
+                <id>172.16.31.173</id>
+                <remote-as>64497</remote-as>
+                <update-source>
+                  <Loopback>0</Loopback>
+                </update-source>
+                <address-family>
+                  <ipv4>
+                    <unicast>
+                    </unicast>
+                  </ipv4>
+                  <vpnv4>
+                    <unicast>
+                    </unicast>
+                  </vpnv4>
+                  <vpnv6>
+                    <unicast>
+                    </unicast>
+                  </vpnv6>
+                </address-family>
+              </neighbor>
+            </bgp-no-instance>
+          </bgp>
+        </router>
+        <mpls xmlns="http://tail-f.com/ned/cisco-ios-xr">
+          <ldp>
+            <interface>
+              <name>GigabitEthernet0/0/0/0</name>
+            </interface>
+          </ldp>
+        </mpls>
+        <xyzroot xmlns="http://tail-f.com/ned/cisco-ios-xr">0</xyzroot>
+      </config>
+    </device>
+    <device>
+      <name>dist-rtr01</name>
+      <address>10.10.20.175</address>
+      <ssh>
+        <host-key-verification>none</host-key-verification>
+      </ssh>
+      <authgroup>labadmin</authgroup>
+      <device-type>
+        <cli>
+          <ned-id xmlns:cisco-ios-cli-6.44="http://tail-f.com/ns/ned-id/cisco-ios-cli-6.44">cisco-ios-cli-6.44:cisco-ios-cli-6.44</ned-id>
+          <protocol>telnet</protocol>
+        </cli>
+      </device-type>
+      <ned-settings>
+        <cisco-ios xmlns="urn:ios-meta">
+          <log-verbose>true</log-verbose>
+        </cisco-ios>
+      </ned-settings>
+      <state>
+        <admin-state>unlocked</admin-state>
+      </state>
+      <config>
+        <tailfned xmlns="urn:ios">
+          <police>cirmode</police>
+        </tailfned>
+        <version xmlns="urn:ios">16.11</version>
+        <service xmlns="urn:ios">
+          <timestamps>
+            <debug>
+              <datetime>
+                <msec/>
+              </datetime>
+            </debug>
+            <log>
+              <datetime>
+                <msec/>
+              </datetime>
+            </log>
+          </timestamps>
+          <call-home/>
+        </service>
+        <login xmlns="urn:ios">
+          <on-success>
+            <log/>
+          </on-success>
+        </login>
+        <platform xmlns="urn:ios">
+          <console>serial</console>
+          <punt-keepalive>
+            <disable-kernel-core>false</disable-kernel-core>
+          </punt-keepalive>
+          <qfp>
+            <utilization>
+              <monitor>
+                <load>80</load>
+              </monitor>
+            </utilization>
+          </qfp>
+        </platform>
+        <hostname xmlns="urn:ios">dist-rtr01</hostname>
+        <vrf xmlns="urn:ios">
+          <definition>
+            <name>Mgmt-intf</name>
+            <address-family>
+              <ipv4>
+              </ipv4>
+              <ipv6>
+              </ipv6>
+            </address-family>
+          </definition>
+        </vrf>
+        <enable xmlns="urn:ios">
+          <password>
+            <secret>cisco</secret>
+          </password>
+        </enable>
+        <call-home xmlns="urn:ios">
+          <contact-email-addr>sch-smart-licensing@cisco.com</contact-email-addr>
+          <profile>
+            <name>CiscoTAC-1</name>
+            <active>true</active>
+            <reporting>
+              <smart-licensing-data>true</smart-licensing-data>
+            </reporting>
+            <destination>
+              <transport-method>
+                <http/>
+                <email>false</email>
+              </transport-method>
+            </destination>
+          </profile>
+        </call-home>
+        <ip xmlns="urn:ios">
+          <domain>
+            <lookup-conf>
+              <lookup>false</lookup>
+            </lookup-conf>
+            <name>virl.info</name>
+          </domain>
+          <ssh>
+            <server>
+              <algorithm>
+                <authentication>password</authentication>
+              </algorithm>
+            </server>
+          </ssh>
+          <forward-protocol>
+            <nd/>
+          </forward-protocol>
+          <http>
+            <server>false</server>
+            <secure-server>true</secure-server>
+          </http>
+          <route>
+            <vrf>
+              <name>Mgmt-intf</name>
+              <ip-route-forwarding-list>
+                <prefix>0.0.0.0</prefix>
+                <mask>0.0.0.0</mask>
+                <forwarding-address>10.10.20.254</forwarding-address>
+              </ip-route-forwarding-list>
+            </vrf>
+          </route>
+        </ip>
+        <ipv6 xmlns="urn:ios">
+          <unicast-routing/>
+        </ipv6>
+        <subscriber xmlns="urn:ios">
+          <templating>true</templating>
+        </subscriber>
+        <multilink xmlns="urn:ios">
+          <bundle-name>authenticated</bundle-name>
+        </multilink>
+        <username xmlns="urn:ios">
+          <name>cisco</name>
+          <privilege>15</privilege>
+          <secret>
+            <type>9</type>
+            <secret>$9$iVecEqVTUJzHUk$EO2BfGoo4I8.wW.QanPw2rSxwy9NJt6kc3xFNEFLYSA</secret>
+          </secret>
+        </username>
+        <redundancy xmlns="urn:ios">
+        </redundancy>
+        <bridge-domain xmlns="urn:ios">
+          <bridge-domain-list>
+            <id>301</id>
+          </bridge-domain-list>
+        </bridge-domain>
+        <crypto xmlns="urn:ios">
+          <pki>
+            <trustpoint>
+              <id>SLA-TrustPoint</id>
+              <enrollment>
+                <pkcs12/>
+              </enrollment>
+              <revocation-check>crl</revocation-check>
+            </trustpoint>
+            <trustpoint>
+              <id>TP-self-signed-3943323508</id>
+              <enrollment>
+                <selfsigned/>
+              </enrollment>
+              <subject-name>cn=IOS-Self-Signed-Certificate-3943323508</subject-name>
+              <revocation-check>none</revocation-check>
+              <rsakeypair>
+                <key-label>TP-self-signed-3943323508</key-label>
+              </rsakeypair>
+            </trustpoint>
+            <certificate>
+              <chain>
+                <name>SLA-TrustPoint</name>
+                <certificate>
+                  <serial>01</serial>
+                  <cert-type>ca</cert-type>
+                  <cert>  30820321 30820209 A0030201 02020101 300D0609 2A864886 F70D0101 0B050030 &#13;
+  32310E30 0C060355 040A1305 43697363 6F312030 1E060355 04031317 43697363 &#13;
+  6F204C69 63656E73 696E6720 526F6F74 20434130 1E170D31 33303533 30313934 &#13;
+  3834375A 170D3338 30353330 31393438 34375A30 32310E30 0C060355 040A1305 &#13;
+  43697363 6F312030 1E060355 04031317 43697363 6F204C69 63656E73 696E6720 &#13;
+  526F6F74 20434130 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 &#13;
+  82010A02 82010100 A6BCBD96 131E05F7 145EA72C 2CD686E6 17222EA1 F1EFF64D &#13;
+  CBB4C798 212AA147 C655D8D7 9471380D 8711441E 1AAF071A 9CAE6388 8A38E520 &#13;
+  1C394D78 462EF239 C659F715 B98C0A59 5BBB5CBD 0CFEBEA3 700A8BF7 D8F256EE &#13;
+  4AA4E80D DB6FD1C9 60B1FD18 FFC69C96 6FA68957 A2617DE7 104FDC5F EA2956AC &#13;
+  7390A3EB 2B5436AD C847A2C5 DAB553EB 69A9A535 58E9F3E3 C0BD23CF 58BD7188 &#13;
+  68E69491 20F320E7 948E71D7 AE3BCC84 F10684C7 4BC8E00F 539BA42B 42C68BB7 &#13;
+  C7479096 B4CB2D62 EA2F505D C7B062A4 6811D95B E8250FC4 5D5D5FB8 8F27D191 &#13;
+  C55F0D76 61F9A4CD 3D992327 A8BB03BD 4E6D7069 7CBADF8B DF5F4368 95135E44 &#13;
+  DFC7C6CF 04DD7FD1 02030100 01A34230 40300E06 03551D0F 0101FF04 04030201 &#13;
+  06300F06 03551D13 0101FF04 05300301 01FF301D 0603551D 0E041604 1449DC85 &#13;
+  4B3D31E5 1B3E6A17 606AF333 3D3B4C73 E8300D06 092A8648 86F70D01 010B0500 &#13;
+  03820101 00507F24 D3932A66 86025D9F E838AE5C 6D4DF6B0 49631C78 240DA905 &#13;
+  604EDCDE FF4FED2B 77FC460E CD636FDB DD44681E 3A5673AB 9093D3B1 6C9E3D8B &#13;
+  D98987BF E40CBD9E 1AECA0C2 2189BB5C 8FA85686 CD98B646 5575B146 8DFC66A8 &#13;
+  467A3DF4 4D565700 6ADF0F0D CF835015 3C04FF7C 21E878AC 11BA9CD2 55A9232C &#13;
+  7CA7B7E6 C1AF74F6 152E99B7 B1FCF9BB E973DE7F 5BDDEB86 C71E3B49 1765308B &#13;
+  5FB0DA06 B92AFE7F 494E8A9E 07B85737 F3A58BE1 1A48A229 C37C1E69 39F08678 &#13;
+  80DDCD16 D6BACECA EEBC7CF9 8428787B 35202CDC 60E4616A B623CDBD 230E3AFB &#13;
+  418616A9 4093E049 4D10AB75 27E86F73 932E35B5 8862FDAE 0275156F 719BB2F0 &#13;
+  D697DF7F 28&#13;
+</cert>
+                </certificate>
+              </chain>
+              <chain>
+                <name>TP-self-signed-3943323508</name>
+                <certificate>
+                  <serial>01</serial>
+                  <cert-type>self-signed</cert-type>
+                  <cert>  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 &#13;
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 &#13;
+  69666963 6174652D 33393433 33323335 3038301E 170D3230 30383234 30383436 &#13;
+  35365A17 0D333030 31303130 30303030 305A3031 312F302D 06035504 03132649 &#13;
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D33 39343333 &#13;
+  32333530 38308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201 &#13;
+  0A028201 0100C9F9 11F2234E 9FB16FF3 FB6A3925 BFBBF113 AAF85E45 48782A40 &#13;
+  6FA8BEED C6559CF7 18B26A08 09EBCF9E 86992E46 4FED21E9 81AD50D2 C3ED2E94 &#13;
+  B04B1C2E 47BA4B59 905DB680 F227FAC6 A454E7A3 AE9595BD ECC19296 E9A52747 &#13;
+  80A48E17 99DE9BB4 79E41484 BE791383 B9E92BE1 A4858309 685BD4B5 B56F9F36 &#13;
+  973E05C4 62665CA2 E0CA59B3 F0C38935 4D72024C 74E6AC53 BED00A4F 4301CBA2 &#13;
+  550B2E44 10522C21 FCAEB6C6 8453CEF4 4E9A1DD4 2BC892B6 86A4186C 553F8C5C &#13;
+  9E95C66F 08FF1BC7 8B34CA61 A096A2B3 1E6EF7FF 00117498 773752E3 10421CE5 &#13;
+  AF10D1A8 7519D9C3 B7C4C182 2C38CD69 4DDA7D0A 34220976 670E1617 82930BF2 &#13;
+  8B4ACF98 C92F0203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF &#13;
+  301F0603 551D2304 18301680 14B2B188 FC96DAB8 41711936 68B91EFD BFF6CA2A &#13;
+  06301D06 03551D0E 04160414 B2B188FC 96DAB841 71193668 B91EFDBF F6CA2A06 &#13;
+  300D0609 2A864886 F70D0101 05050003 82010100 82B96AB1 ADDB438E 0401B3C9 &#13;
+  81E3DA33 4087DF59 EE90C91C 5A185513 628E65CE BCD007CC B87E2086 39DE9166 &#13;
+  8E2EE005 E4EFC685 0152FF32 2E8B68D3 F75B5AF3 F425CF11 54808780 17D700A3 &#13;
+  6ECCABF6 4D771866 228A87F8 3F86EFF4 651D9833 E7ACFB94 7C10B97F DFD19C8D &#13;
+  1C9E67F7 0BF9F9DC 7A925032 94806C74 9CFB761D B976E2B2 A86A65EB 8BFB49F5 &#13;
+  387809ED DF2BC748 80F62426 CDA8CA8C 34E9015A 1D4F715F 8F1AB5F2 7F977C05 &#13;
+  8770D9D0 5347B038 BF4B3E18 FAB9EA53 FC9B36FC FA131CE5 FD504D60 C62F0693 &#13;
+  EBC4E317 8B290BFA 32C9D8C9 0B794EA9 4AD4358C ADA5F754 F9E63BD0 202828F8 &#13;
+  A9579661 D22DA5E8 239C8C31 15F9FFAD 51228BDA&#13;
+</cert>
+                </certificate>
+              </chain>
+            </certificate>
+          </pki>
+        </crypto>
+        <interface xmlns="urn:ios">
+          <Loopback>
+            <name>0</name>
+            <description>to</description>
+            <ip>
+              <no-address>
+                <address>false</address>
+              </no-address>
+            </ip>
+            <shutdown/>
+          </Loopback>
+          <GigabitEthernet>
+            <name>1</name>
+            <description>to port6.sandbox-backend</description>
+            <negotiation>
+              <auto>true</auto>
+            </negotiation>
+            <mop>
+              <xenabled>false</xenabled>
+              <sysid>false</sysid>
+            </mop>
+            <vrf>
+              <forwarding>Mgmt-intf</forwarding>
+            </vrf>
+            <ip>
+              <address>
+                <primary>
+                  <address>10.10.20.175</address>
+                  <mask>255.255.255.0</mask>
+                </primary>
+              </address>
+            </ip>
+          </GigabitEthernet>
+          <GigabitEthernet>
+            <name>2</name>
+            <description>L3 Link to core-rtr01</description>
+            <negotiation>
+              <auto>true</auto>
+            </negotiation>
+            <mop>
+              <xenabled>false</xenabled>
+              <sysid>false</sysid>
+            </mop>
+            <ip>
+              <no-address>
+                <address>false</address>
+              </no-address>
+            </ip>
+          </GigabitEthernet>
+          <GigabitEthernet>
+            <name>3</name>
+            <description>L3 Link to core-rtr02</description>
+            <negotiation>
+              <auto>true</auto>
+            </negotiation>
+            <mop>
+              <xenabled>false</xenabled>
+              <sysid>false</sysid>
+            </mop>
+            <ip>
+              <address>
+                <primary>
+                  <address>172.16.252.25</address>
+                  <mask>255.255.255.252</mask>
+                </primary>
+              </address>
+            </ip>
+          </GigabitEthernet>
+          <GigabitEthernet>
+            <name>4</name>
+            <description>L3 Link to dist-sw01</description>
+            <negotiation>
+              <auto>true</auto>
+            </negotiation>
+            <mop>
+              <xenabled>false</xenabled>
+              <sysid>false</sysid>
+            </mop>
+            <ip>
+              <address>
+                <primary>
+                  <address>172.16.252.2</address>
+                  <mask>255.255.255.252</mask>
+                </primary>
+              </address>
+            </ip>
+          </GigabitEthernet>
+          <GigabitEthernet>
+            <name>5</name>
+            <description>L3 Link to dist-sw02</description>
+            <negotiation>
+              <auto>true</auto>
+            </negotiation>
+            <mop>
+              <xenabled>false</xenabled>
+              <sysid>false</sysid>
+            </mop>
+            <ip>
+              <address>
+                <primary>
+                  <address>172.16.252.10</address>
+                  <mask>255.255.255.252</mask>
+                </primary>
+              </address>
+            </ip>
+          </GigabitEthernet>
+          <GigabitEthernet>
+            <name>6</name>
+            <description>L3 Link to dist-rtr02</description>
+            <negotiation>
+              <auto>true</auto>
+            </negotiation>
+            <mop>
+              <xenabled>false</xenabled>
+              <sysid>false</sysid>
+            </mop>
+            <ip>
+              <address>
+                <primary>
+                  <address>172.16.252.17</address>
+                  <mask>255.255.255.252</mask>
+                </primary>
+              </address>
+            </ip>
+          </GigabitEthernet>
+        </interface>
+        <control-plane xmlns="urn:ios">
+        </control-plane>
+        <line xmlns="urn:ios">
+          <console>
+            <first>0</first>
+            <exec-timeout>
+              <minutes>0</minutes>
+            </exec-timeout>
+            <password>
+              <secret>cisco</secret>
+            </password>
+            <stopbits>1</stopbits>
+          </console>
+          <vty>
+            <first>0</first>
+            <last>4</last>
+            <exec-timeout>
+              <minutes>720</minutes>
+            </exec-timeout>
+            <login>
+              <local/>
+            </login>
+            <password>
+              <secret>cisco</secret>
+            </password>
+            <transport>
+              <input>ssh</input>
+              <input>telnet</input>
+            </transport>
+          </vty>
+        </line>
+        <logging xmlns="urn:ios">
+          <buffered>
+            <severity-level>debugging</severity-level>
+          </buffered>
+          <monitor>
+            <severity-level>debugging</severity-level>
+          </monitor>
+        </logging>
+        <spanning-tree xmlns="urn:ios">
+          <extend>
+            <system-id/>
+          </extend>
+        </spanning-tree>
+        <diagnostic xmlns="urn:ios">
+          <bootup>
+            <level>minimal</level>
+          </bootup>
+        </diagnostic>
+        <router xmlns="urn:ios">
+          <ospf>
+            <id>1</id>
+            <network>
+              <ip>172.16.252.0</ip>
+              <mask>0.0.3.255</mask>
+              <area>0</area>
+            </network>
+          </ospf>
+        </router>
+        <memory xmlns="urn:ios">
+          <free>
+            <low-watermark>
+              <processor>80526</processor>
+            </low-watermark>
+          </free>
+        </memory>
+      </config>
+    </device>
+    <device>
+      <name>dist-rtr02</name>
+      <address>10.10.20.176</address>
+      <ssh>
+        <host-key-verification>none</host-key-verification>
+      </ssh>
+      <authgroup>labadmin</authgroup>
+      <device-type>
+        <cli>
+          <ned-id xmlns:cisco-ios-cli-6.44="http://tail-f.com/ns/ned-id/cisco-ios-cli-6.44">cisco-ios-cli-6.44:cisco-ios-cli-6.44</ned-id>
+          <protocol>telnet</protocol>
+        </cli>
+      </device-type>
+      <state>
+        <admin-state>unlocked</admin-state>
+      </state>
+      <config>
+        <tailfned xmlns="urn:ios">
+          <police>cirmode</police>
+        </tailfned>
+        <version xmlns="urn:ios">16.11</version>
+        <service xmlns="urn:ios">
+          <timestamps>
+            <debug>
+              <datetime>
+                <msec/>
+              </datetime>
+            </debug>
+            <log>
+              <datetime>
+                <msec/>
+              </datetime>
+            </log>
+          </timestamps>
+          <call-home/>
+        </service>
+        <login xmlns="urn:ios">
+          <on-success>
+            <log/>
+          </on-success>
+        </login>
+        <platform xmlns="urn:ios">
+          <console>serial</console>
+          <punt-keepalive>
+            <disable-kernel-core>false</disable-kernel-core>
+          </punt-keepalive>
+          <qfp>
+            <utilization>
+              <monitor>
+                <load>80</load>
+              </monitor>
+            </utilization>
+          </qfp>
+        </platform>
+        <hostname xmlns="urn:ios">dist-rtr02</hostname>
+        <vrf xmlns="urn:ios">
+          <definition>
+            <name>Mgmt-intf</name>
+            <address-family>
+              <ipv4>
+              </ipv4>
+              <ipv6>
+              </ipv6>
+            </address-family>
+          </definition>
+        </vrf>
+        <enable xmlns="urn:ios">
+          <password>
+            <secret>cisco</secret>
+          </password>
+        </enable>
+        <call-home xmlns="urn:ios">
+          <contact-email-addr>sch-smart-licensing@cisco.com</contact-email-addr>
+          <profile>
+            <name>CiscoTAC-1</name>
+            <active>true</active>
+            <reporting>
+              <smart-licensing-data>true</smart-licensing-data>
+            </reporting>
+            <destination>
+              <transport-method>
+                <http/>
+                <email>false</email>
+              </transport-method>
+            </destination>
+          </profile>
+        </call-home>
+        <ip xmlns="urn:ios">
+          <domain>
+            <lookup-conf>
+              <lookup>false</lookup>
+            </lookup-conf>
+            <name>virl.info</name>
+          </domain>
+          <ssh>
+            <server>
+              <algorithm>
+                <authentication>password</authentication>
+              </algorithm>
+            </server>
+          </ssh>
+          <forward-protocol>
+            <nd/>
+          </forward-protocol>
+          <http>
+            <server>false</server>
+            <secure-server>true</secure-server>
+          </http>
+          <route>
+            <vrf>
+              <name>Mgmt-intf</name>
+              <ip-route-forwarding-list>
+                <prefix>0.0.0.0</prefix>
+                <mask>0.0.0.0</mask>
+                <forwarding-address>10.10.20.254</forwarding-address>
+              </ip-route-forwarding-list>
+            </vrf>
+          </route>
+        </ip>
+        <ipv6 xmlns="urn:ios">
+          <unicast-routing/>
+        </ipv6>
+        <subscriber xmlns="urn:ios">
+          <templating>true</templating>
+        </subscriber>
+        <multilink xmlns="urn:ios">
+          <bundle-name>authenticated</bundle-name>
+        </multilink>
+        <username xmlns="urn:ios">
+          <name>cisco</name>
+          <privilege>15</privilege>
+          <secret>
+            <type>9</type>
+            <secret>$9$cONmK/B00qLzO.$iaGnQNzSbJ3ypgnmS02qYpg3FORertbgOgB2CyOHl9g</secret>
+          </secret>
+        </username>
+        <redundancy xmlns="urn:ios">
+        </redundancy>
+        <crypto xmlns="urn:ios">
+          <pki>
+            <trustpoint>
+              <id>SLA-TrustPoint</id>
+              <enrollment>
+                <pkcs12/>
+              </enrollment>
+              <revocation-check>crl</revocation-check>
+            </trustpoint>
+            <trustpoint>
+              <id>TP-self-signed-1432326359</id>
+              <enrollment>
+                <selfsigned/>
+              </enrollment>
+              <subject-name>cn=IOS-Self-Signed-Certificate-1432326359</subject-name>
+              <revocation-check>none</revocation-check>
+              <rsakeypair>
+                <key-label>TP-self-signed-1432326359</key-label>
+              </rsakeypair>
+            </trustpoint>
+            <certificate>
+              <chain>
+                <name>SLA-TrustPoint</name>
+                <certificate>
+                  <serial>01</serial>
+                  <cert-type>ca</cert-type>
+                  <cert>  30820321 30820209 A0030201 02020101 300D0609 2A864886 F70D0101 0B050030 &#13;
+  32310E30 0C060355 040A1305 43697363 6F312030 1E060355 04031317 43697363 &#13;
+  6F204C69 63656E73 696E6720 526F6F74 20434130 1E170D31 33303533 30313934 &#13;
+  3834375A 170D3338 30353330 31393438 34375A30 32310E30 0C060355 040A1305 &#13;
+  43697363 6F312030 1E060355 04031317 43697363 6F204C69 63656E73 696E6720 &#13;
+  526F6F74 20434130 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 &#13;
+  82010A02 82010100 A6BCBD96 131E05F7 145EA72C 2CD686E6 17222EA1 F1EFF64D &#13;
+  CBB4C798 212AA147 C655D8D7 9471380D 8711441E 1AAF071A 9CAE6388 8A38E520 &#13;
+  1C394D78 462EF239 C659F715 B98C0A59 5BBB5CBD 0CFEBEA3 700A8BF7 D8F256EE &#13;
+  4AA4E80D DB6FD1C9 60B1FD18 FFC69C96 6FA68957 A2617DE7 104FDC5F EA2956AC &#13;
+  7390A3EB 2B5436AD C847A2C5 DAB553EB 69A9A535 58E9F3E3 C0BD23CF 58BD7188 &#13;
+  68E69491 20F320E7 948E71D7 AE3BCC84 F10684C7 4BC8E00F 539BA42B 42C68BB7 &#13;
+  C7479096 B4CB2D62 EA2F505D C7B062A4 6811D95B E8250FC4 5D5D5FB8 8F27D191 &#13;
+  C55F0D76 61F9A4CD 3D992327 A8BB03BD 4E6D7069 7CBADF8B DF5F4368 95135E44 &#13;
+  DFC7C6CF 04DD7FD1 02030100 01A34230 40300E06 03551D0F 0101FF04 04030201 &#13;
+  06300F06 03551D13 0101FF04 05300301 01FF301D 0603551D 0E041604 1449DC85 &#13;
+  4B3D31E5 1B3E6A17 606AF333 3D3B4C73 E8300D06 092A8648 86F70D01 010B0500 &#13;
+  03820101 00507F24 D3932A66 86025D9F E838AE5C 6D4DF6B0 49631C78 240DA905 &#13;
+  604EDCDE FF4FED2B 77FC460E CD636FDB DD44681E 3A5673AB 9093D3B1 6C9E3D8B &#13;
+  D98987BF E40CBD9E 1AECA0C2 2189BB5C 8FA85686 CD98B646 5575B146 8DFC66A8 &#13;
+  467A3DF4 4D565700 6ADF0F0D CF835015 3C04FF7C 21E878AC 11BA9CD2 55A9232C &#13;
+  7CA7B7E6 C1AF74F6 152E99B7 B1FCF9BB E973DE7F 5BDDEB86 C71E3B49 1765308B &#13;
+  5FB0DA06 B92AFE7F 494E8A9E 07B85737 F3A58BE1 1A48A229 C37C1E69 39F08678 &#13;
+  80DDCD16 D6BACECA EEBC7CF9 8428787B 35202CDC 60E4616A B623CDBD 230E3AFB &#13;
+  418616A9 4093E049 4D10AB75 27E86F73 932E35B5 8862FDAE 0275156F 719BB2F0 &#13;
+  D697DF7F 28&#13;
+</cert>
+                </certificate>
+              </chain>
+              <chain>
+                <name>TP-self-signed-1432326359</name>
+                <certificate>
+                  <serial>01</serial>
+                  <cert-type>self-signed</cert-type>
+                  <cert>  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 &#13;
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 &#13;
+  69666963 6174652D 31343332 33323633 3539301E 170D3230 30383234 30383436 &#13;
+  35385A17 0D333030 31303130 30303030 305A3031 312F302D 06035504 03132649 &#13;
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D31 34333233 &#13;
+  32363335 39308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201 &#13;
+  0A028201 0100AAF4 1B1F464F B2C85982 3C55A2A1 3C449DAE A60D04F7 CF8B171A &#13;
+  BE431E52 603DBC6F 946FFF8B D1F794BF 5A4DC3B5 EA4E5DA8 719593B9 C910CDD7 &#13;
+  F5B84BEB F772FEE1 F4540E15 6139D1E8 61D1D1BD 8B15D57C FFE7FAC0 252FC31A &#13;
+  7C4E3EAC 157524B6 4663E334 0BF24DEC D21726E6 E5A471C8 E032E64B 91FA5AC8 &#13;
+  56B39A2C DFF578FC CC06B317 B951C355 7B7661B1 EB2C6635 03F5A9D9 9B66E68F &#13;
+  8162BBDA B675E812 C812FC1F 7BAF0688 EFCDB123 D980435A 109AF3BF A7E8E3A3 &#13;
+  D6645DB5 18F41E29 9FB1FD4D DF26AFD2 DC6CA70D 8A0DD3FF CC6F76D9 150369DD &#13;
+  90EC5D8C FB150C43 C76CC481 047D801E 6FE6FE9F B9CE3EEE 58F0D696 1CC7328E &#13;
+  BE368D14 4E6B0203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF &#13;
+  301F0603 551D2304 18301680 14DB8F7C 5402D193 D059D22A C6E34739 C5E837CB &#13;
+  A8301D06 03551D0E 04160414 DB8F7C54 02D193D0 59D22AC6 E34739C5 E837CBA8 &#13;
+  300D0609 2A864886 F70D0101 05050003 82010100 0726107E 4889ED82 30E53879 &#13;
+  660A8C2F 729D6250 01E1AAD4 8A034CA1 4E835E4E 9A2BC1AA E516DC6D A04A3416 &#13;
+  6A1A361B 3F0FDF77 3267BF6F DDBC2053 792792A9 8A465748 1BC9F011 E83099A8 &#13;
+  BE9043C9 9A3A556D 7E6B1866 930FE5AB 21E0ABFC C97E977B 57DF5DB7 996ED983 &#13;
+  37EC35F7 5769B075 A1E8E164 65FD10F9 9F7EE343 880ECE38 B2E3A5BA 76A4A84E &#13;
+  8A857284 73750C50 07E1A157 0A7BD484 064D596E 9751BAA5 D07F70AE 008FEAD1 &#13;
+  8F2DA5F6 B0F84E18 A085E2A5 1C7CC095 DD82FE43 374068A0 734FC66B 76B12416 &#13;
+  65485593 4BB61C61 36B34E2D 4120F971 D54F9A39 43CA5B08 18749735 01410957 &#13;
+  C0D1134B FE4CF171 75DEC2C6 33B10128 CF8DD14F&#13;
+</cert>
+                </certificate>
+              </chain>
+            </certificate>
+          </pki>
+        </crypto>
+        <interface xmlns="urn:ios">
+          <Loopback>
+            <name>0</name>
+            <description>to</description>
+            <ip>
+              <no-address>
+                <address>false</address>
+              </no-address>
+            </ip>
+            <shutdown/>
+          </Loopback>
+          <GigabitEthernet>
+            <name>1</name>
+            <description>to port7.sandbox-backend</description>
+            <negotiation>
+              <auto>true</auto>
+            </negotiation>
+            <mop>
+              <xenabled>false</xenabled>
+              <sysid>false</sysid>
+            </mop>
+            <vrf>
+              <forwarding>Mgmt-intf</forwarding>
+            </vrf>
+            <ip>
+              <address>
+                <primary>
+                  <address>10.10.20.176</address>
+                  <mask>255.255.255.0</mask>
+                </primary>
+              </address>
+            </ip>
+          </GigabitEthernet>
+          <GigabitEthernet>
+            <name>2</name>
+            <description>L3 Link to core-rtr01</description>
+            <negotiation>
+              <auto>true</auto>
+            </negotiation>
+            <mop>
+              <xenabled>false</xenabled>
+              <sysid>false</sysid>
+            </mop>
+            <ip>
+              <address>
+                <primary>
+                  <address>172.16.252.29</address>
+                  <mask>255.255.255.252</mask>
+                </primary>
+              </address>
+            </ip>
+          </GigabitEthernet>
+          <GigabitEthernet>
+            <name>3</name>
+            <description>L3 Link to core-rtr02</description>
+            <negotiation>
+              <auto>true</auto>
+            </negotiation>
+            <mop>
+              <xenabled>false</xenabled>
+              <sysid>false</sysid>
+            </mop>
+            <ip>
+              <no-address>
+                <address>false</address>
+              </no-address>
+            </ip>
+          </GigabitEthernet>
+          <GigabitEthernet>
+            <name>4</name>
+            <description>L3 Link to dist-sw01</description>
+            <negotiation>
+              <auto>true</auto>
+            </negotiation>
+            <mop>
+              <xenabled>false</xenabled>
+              <sysid>false</sysid>
+            </mop>
+            <ip>
+              <address>
+                <primary>
+                  <address>172.16.252.6</address>
+                  <mask>255.255.255.252</mask>
+                </primary>
+              </address>
+            </ip>
+          </GigabitEthernet>
+          <GigabitEthernet>
+            <name>5</name>
+            <description>L3 Link to dist-sw02</description>
+            <negotiation>
+              <auto>true</auto>
+            </negotiation>
+            <mop>
+              <xenabled>false</xenabled>
+              <sysid>false</sysid>
+            </mop>
+            <ip>
+              <address>
+                <primary>
+                  <address>172.16.252.14</address>
+                  <mask>255.255.255.252</mask>
+                </primary>
+              </address>
+            </ip>
+          </GigabitEthernet>
+          <GigabitEthernet>
+            <name>6</name>
+            <description>L3 Link to dist-rtr01</description>
+            <negotiation>
+              <auto>true</auto>
+            </negotiation>
+            <mop>
+              <xenabled>false</xenabled>
+              <sysid>false</sysid>
+            </mop>
+            <ip>
+              <address>
+                <primary>
+                  <address>172.16.252.18</address>
+                  <mask>255.255.255.252</mask>
+                </primary>
+              </address>
+            </ip>
+          </GigabitEthernet>
+        </interface>
+        <control-plane xmlns="urn:ios">
+        </control-plane>
+        <line xmlns="urn:ios">
+          <console>
+            <first>0</first>
+            <exec-timeout>
+              <minutes>0</minutes>
+            </exec-timeout>
+            <password>
+              <secret>cisco</secret>
+            </password>
+            <stopbits>1</stopbits>
+          </console>
+          <vty>
+            <first>0</first>
+            <last>4</last>
+            <exec-timeout>
+              <minutes>720</minutes>
+            </exec-timeout>
+            <login>
+              <local/>
+            </login>
+            <password>
+              <secret>cisco</secret>
+            </password>
+            <transport>
+              <input>ssh</input>
+              <input>telnet</input>
+            </transport>
+          </vty>
+        </line>
+        <logging xmlns="urn:ios">
+          <buffered>
+            <severity-level>debugging</severity-level>
+          </buffered>
+          <monitor>
+            <severity-level>debugging</severity-level>
+          </monitor>
+        </logging>
+        <spanning-tree xmlns="urn:ios">
+          <extend>
+            <system-id/>
+          </extend>
+        </spanning-tree>
+        <diagnostic xmlns="urn:ios">
+          <bootup>
+            <level>minimal</level>
+          </bootup>
+        </diagnostic>
+        <router xmlns="urn:ios">
+          <ospf>
+            <id>1</id>
+            <network>
+              <ip>172.16.252.0</ip>
+              <mask>0.0.3.255</mask>
+              <area>0</area>
+            </network>
+          </ospf>
+        </router>
+        <memory xmlns="urn:ios">
+          <free>
+            <low-watermark>
+              <processor>80526</processor>
+            </low-watermark>
+          </free>
+        </memory>
+      </config>
+    </device>
+  </devices>
+</config>

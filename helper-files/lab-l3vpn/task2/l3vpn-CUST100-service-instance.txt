@@ -1,0 +1,36 @@
+l3vpn CUST100
+ vpn vpn-id      100
+ vpn vpn-description TEST L3VPN SERVICE INSTANCE
+ link link1
+  link-id          1
+  link-description "Site 1"
+  bgp              true
+  vlan             100
+  pe device core-rtr01
+  pe interface GigabitEthernet0/0/0/2
+  pe ip     10.1.1.1
+  pe ipv6   fd12:0:0:100::1
+  pe static [ 10.1.0.0/16 10.2.0.0/16 10.3.0.0/16 fd12:100:1::/48 fd12:100:2::/48 ]
+  ce device dist-rtr01
+  ce interface GigabitEthernet2
+  ce ip     10.1.1.2
+  ce ipv6   fd12:0:0:100::2
+  ce static [ 0.0.0.0/0 ::/0 ]
+ !
+ link link2
+  link-id          2
+  link-description "Site 2"
+  bgp              true
+  vlan             100
+  pe device core-rtr02
+  pe interface GigabitEthernet0/0/0/3
+  pe ip     10.1.1.5
+  pe ipv6   fd12:0:0:100::1
+  pe static [ 10.4.0.0/16 10.5.0.0/16 10.6.0.0/16 fd12:100:3::/48 fd12:100:4::/48 ]
+  ce device dist-rtr02
+  ce interface GigabitEthernet3
+  ce ip     10.1.1.6
+  ce ipv6   fd12:0:0:100::2
+  ce static [ 0.0.0.0/0 ::/0 ]
+ !
+!

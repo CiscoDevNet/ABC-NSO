@@ -1,0 +1,21 @@
+devices device core-rtr01
+ config
+  router rip
+   vrf CUST100
+    interface GigabitEthernet0/0/0/2.100
+    exit
+    redistribute connected
+    redistribute bgp 64497
+    default-metric 1
+   !
+  !
+  router bgp 64497
+   vrf CUST100
+    rd 64497:100
+    address-family ipv4 unicast
+     redistribute rip
+    !
+   !
+  !
+ !
+!

@@ -1,0 +1,10 @@
+l3vpn CUST100
+ link link1
+  bgp false
+  rip true
+ !
+ link link2
+  bgp false
+  rip true
+ !
+!
