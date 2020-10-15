@@ -1,0 +1,10 @@
+
+devices template NTP ned-id cisco-iosxr-cli-7.20 config
+ntp server server-list {/devices/device[name=$DEVICE]/config/ntp/server/server-list}
+ntp server server-list {$NTP}
+tag add devices template NTP ned-id cisco-iosxr-cli-7.20 config ntp server server-list {/devices/device[name=$DEVICE]/config/ntp/server/server-list} delete
+
+devices template NTP ned-id cisco-ios-cli-6.44 config
+ntp server peer-list {/devices/device[name=$DEVICE]/config/ntp/server/peer-list}
+ntp server peer-list {$NTP}
+tag add devices template NTP ned-id cisco-ios-cli-6.44 config ntp server peer-list {/devices/device[name=$DEVICE]/config/ntp/server/peer-list} delete

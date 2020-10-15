@@ -1,0 +1,14 @@
+compliance reports report NTP_CE
+ compare-template NTP "CE Routers"
+  variable NTP
+   value '10.6.6.6'
+  !
+ !
+!
+compliance reports report NTP_PE
+ compare-template NTP "PE Routers"
+  variable NTP
+   value '10.5.5.5'
+  !
+ !
+!

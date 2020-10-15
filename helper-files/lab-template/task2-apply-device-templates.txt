@@ -1,0 +1,2 @@
+devices device-group PE\ Routers apply-template template-name NTP variable { name NTP value '10.5.5.5' }
+devices device-group CE\ Routers apply-template template-name NTP variable { name NTP value '10.6.6.6' }

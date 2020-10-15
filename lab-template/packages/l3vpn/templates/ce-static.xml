@@ -1,0 +1,26 @@
+<devices xmlns="http://tail-f.com/ns/ncs">
+  <device>
+    <name>{$CE_DEVICE}</name>
+    <config>
+      <ip xmlns="urn:ios">
+        <route>
+          <ip-route-forwarding-list>
+            <prefix>{$CE_STATIC}</prefix>
+            <mask>{$CE_STATIC_MASK}</mask>
+            <forwarding-address>{$PE_IP}</forwarding-address>
+          </ip-route-forwarding-list>
+        </route>
+      </ip>
+      <ipv6 xmlns="urn:ios">
+        <route>
+          <no-vrf>
+            <ipv6-route-destination-list>
+              <prefix>{$CE_STATIC_V6}</prefix>
+              <destination>{$PE_IPV6}</destination>
+            </ipv6-route-destination-list>
+          </no-vrf>
+        </route>
+      </ipv6>
+    </config>
+  </device>
+</devices>
