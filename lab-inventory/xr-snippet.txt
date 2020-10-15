@@ -1,0 +1,4 @@
+interface GigabitEthernet0/0/0/1
+  ipv4 address 10.1.1.1 255.255.255.0
+  desc Configured from xr-snippet.txt
+!

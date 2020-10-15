@@ -1,0 +1,56 @@
+<config xmlns="http://tail-f.com/ns/config/1.0">
+  <devices xmlns="http://tail-f.com/ns/ncs">
+  <authgroups>
+    <group>
+      <name>default</name>
+      <umap>
+        <local-user>admin</local-user>
+        <remote-name>admin</remote-name>
+        <remote-password>admin</remote-password>
+      </umap>
+    </group>
+ </authgroups>
+ <device>
+    <name>core-rtr01</name>
+    <address>10.10.20.173</address>
+   <authgroup>default</authgroup>
+    <device-type>
+      <cli>
+        <ned-id xmlns:cisco-iosxr-cli-7.20="http://tail-f.com/ns/ned-id/cisco-iosxr-cli-7.20">cisco-iosxr-cli-7.20:cisco-iosxr-cli-7.20</ned-id>
+        <protocol>telnet</protocol>
+      </cli>
+    </device-type>
+    <state>
+      <admin-state>unlocked</admin-state>
+    </state>
+  </device>
+  <device>
+    <name>core-rtr02</name>
+    <address>10.10.20.174</address>
+   <authgroup>default</authgroup>
+    <device-type>
+      <cli>
+        <ned-id xmlns:cisco-iosxr-cli-7.20="http://tail-f.com/ns/ned-id/cisco-iosxr-cli-7.20">cisco-iosxr-cli-7.20:cisco-iosxr-cli-7.20</ned-id>
+        <protocol>telnet</protocol>
+      </cli>
+    </device-type>
+    <state>
+      <admin-state>unlocked</admin-state>
+    </state>
+  </device>
+  <device>
+    <name>dist-rtr01</name>
+    <address>10.10.20.125</address>
+   <authgroup>default</authgroup>
+    <device-type>
+      <cli>
+        <ned-id xmlns:cisco-iosxr-cli-7.20="http://tail-f.com/ns/ned-id/cisco-iosxr-cli-7.20">cisco-iosxr-cli-7.20:cisco-iosxr-cli-7.20</ned-id>
+        <protocol>telnet</protocol>
+      </cli>
+    </device-type>
+    <state>
+      <admin-state>unlocked</admin-state>
+    </state>
+  </device>
+  </devices>
+</config>
