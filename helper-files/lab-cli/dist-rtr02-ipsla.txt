@@ -1,3 +1,4 @@
+devices device dist-rtr02 config
 ip sla 10
  icmp-echo 10.1.1.2
  frequency 5
