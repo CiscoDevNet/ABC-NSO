@@ -1,0 +1,127 @@
+module l3vpn {
+  namespace "http://com/example/l3vpn";
+  prefix l3vpn;
+
+  import ietf-inet-types { prefix inet; }
+  import tailf-ncs       { prefix ncs; }
+  import tailf-common    { prefix tailf; }
+  
+
+
+  list l3vpn {
+    key "vpn-name";
+
+    uses ncs:service-data;
+    ncs:servicepoint "l3vpn-servicepoint";
+
+    leaf vpn-name {
+      type string;
+      mandatory true;
+    }
+
+    container vpn {
+    
+      leaf vpn-id {
+        type uint32;
+        mandatory true;
+
+      }
+
+      leaf vpn-description {
+        type string;
+      }
+      
+      leaf customer {
+        type leafref {
+          path "/ncs:customers/ncs:customer/ncs:id";
+        }
+      }
+    }
+
+    list link {
+      key link-name;
+      min-elements 1;
+
+      leaf link-name {
+        type string;
+      }
+
+      leaf link-id {
+        type uint32;
+        mandatory true;
+      }
+
+      leaf link-description {
+        type string;
+      }
+
+      leaf bgp {
+        type boolean;
+        default false;
+      }
+      
+      leaf vlan {
+        type uint32;
+        mandatory true;
+      }
+
+      container pe {
+        leaf device {
+          mandatory true;
+          type leafref {
+            path "/ncs:devices/ncs:device/ncs:name";
+          }
+        }
+
+        leaf interface {
+          type string;
+          mandatory true;
+        }
+
+        leaf ip {
+          type inet:ipv4-address;
+          mandatory true;
+        }
+
+        leaf ipv6 {
+          type inet:ipv6-address;
+        }
+
+        leaf-list static {
+          type inet:ip-prefix;
+        }
+
+      }
+
+      container ce {
+        leaf device {
+          mandatory true;
+          type leafref {
+            path "/ncs:devices/ncs:device/ncs:name";
+          }
+        }
+
+        leaf interface {
+          type string;
+          mandatory true;
+
+        }
+
+        leaf ip {
+          type inet:ipv4-address;
+          mandatory true;
+        }
+        
+        leaf ipv6 {
+          type inet:ipv6-address;
+        }
+
+        leaf-list static {
+          type inet:ip-prefix;
+        }
+
+      }
+    }
+  }
+}
+
