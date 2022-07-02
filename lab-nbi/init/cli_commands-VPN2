@@ -1,0 +1,33 @@
+config
+l3vpn VPN2
+vpn vpn-id 200
+vpn vpn-description VPN instance for ACME
+vpn customer ACME
+link link1
+link-id 1
+link-description "link1 configuration"
+bgp true
+vlan 2000
+pe device core-rtr01
+pe interface Gi0/0/0/2
+pe ip 10.2.1.1
+pe ipv6 2001:2:1::1
+ce device dist-rtr01
+ce interface Gi2
+ce ip 10.2.1.2
+ce ipv6 2001:2:1::2
+exit
+link link2
+link-id 2
+link-description "link2 configuration"
+bgp true
+vlan 2000
+pe device core-rtr02
+pe interface Gi0/0/0/3
+pe ip 10.2.2.1
+pe ipv6 2001:2:2::1
+ce device dist-rtr02
+ce interface Gi3
+ce ip 10.2.2.2
+ce ipv6 2001:2:2::2
+top

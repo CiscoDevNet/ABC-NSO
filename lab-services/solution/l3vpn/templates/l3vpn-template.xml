@@ -35,12 +35,6 @@
                                 </address-list>
                             </route-target>
                             </export>
-                            <maximum>
-                            <prefix>
-                                <limit>1000</limit>
-                                <mid-thresh>80</mid-thresh>
-                            </prefix>
-                            </maximum>
                         </unicast>
                         </ipv4>
                     </address-family>
@@ -69,8 +63,7 @@
                 </interface>
                 <route-policy xmlns="http://tail-f.com/ned/cisco-ios-xr">
                     <name>PASS</name>
-                    <value>  pass&#13;
-                </value>
+                    <value>pass</value>
                 </route-policy>
                     <router xmlns="http://tail-f.com/ned/cisco-ios-xr">
 
@@ -88,7 +81,7 @@
                                         <?if {pe/routing/redistribute/connected}?>
                                             <connected/>
                                         <?end?>
-                                        <?if {pe/routing/redistribute/connected}?>
+                                        <?if {pe/routing/redistribute/static}?>
                                             <static/>
                                         <?end?>
                                         </redistribute>
