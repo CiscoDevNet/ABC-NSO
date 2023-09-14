@@ -3,7 +3,7 @@ version: '3.4'
 services:
   vault:
     restart: always
-    image: vault 
+    image: vault:1.13.3 
     hostname: vault 
     ports: 
         - "1234:8200"
